@@ -2,7 +2,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ThemeProvider from './context/ThemeProvider';
 import { GlobalStyles } from './components';
-import Calender from './routers/Calender';
+import Calendar from './routers/Calendar';
 import Layout from './routers/Layout';
 import Login from './routers/Login';
 
@@ -17,8 +17,8 @@ const router = createBrowserRouter([
                 element: <Login />
             },
             {
-                path: 'calender',
-                element: <Calender />
+                path: 'calendar',
+                element: <Calendar />
             }
         ]
     }

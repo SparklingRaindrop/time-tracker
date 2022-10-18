@@ -3,7 +3,7 @@ import { Wrapper } from './styled';
 
 export default function TopBar() {
     const { pathname } = useLocation();
-    // Adjust for calender 
+    // Adjust for calendar 
     if (pathname === '/') return;
     return (
         <Wrapper>

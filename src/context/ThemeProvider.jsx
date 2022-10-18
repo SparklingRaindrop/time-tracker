@@ -1,4 +1,5 @@
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const colors = {
     primary: '#73C398',
@@ -22,3 +23,7 @@ export default function ThemeProvider(props) {
         </StyledThemeProvider>
     )
 }
+
+ThemeProvider.propTypes = {
+    children: PropTypes.array,
+};

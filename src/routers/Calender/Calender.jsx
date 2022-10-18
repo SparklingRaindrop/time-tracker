@@ -1,12 +1,12 @@
-import { Wrapper } from './styled';
 import TimerList from './blocks/TimerList';
-import GridCalender from './GridCalender';
+import GridCalendars from './GridCalendars';
+import { Main } from '../../components';
 
-export default function Calender() {
+export default function Calendar() {
     return (
-        <Wrapper>
-            <GridCalender />
+        <Main>
+            <GridCalendars />
             <TimerList />
-        </Wrapper>
+        </Main>
     )
 }

@@ -1,17 +1,14 @@
-import PropTypes from 'prop-types';
 import { Wrapper } from './styled';
+import PropTypes from 'prop-types';
 
-export default function Nav(props) {
+export default function Main(props) {
     const { children, className } = props;
     return (
         <Wrapper className={className}>{children}</Wrapper>
     )
 }
 
-Nav.propTypes = {
+Main.propTypes = {
     className: PropTypes.string,
-    children: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-    ]),
+    children: PropTypes.array,
 };

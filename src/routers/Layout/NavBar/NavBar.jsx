@@ -6,9 +6,9 @@ const navLinks = [{
     icon: 'clock',
     title: 'Timekeeper'
 }, {
-    linkTo: 'calender',
-    icon: 'calender',
-    title: 'Calender'
+    linkTo: 'calendar',
+    icon: 'calendar',
+    title: 'Calendar'
 }, {
     linkTo: '',
     icon: 'businessBag',
