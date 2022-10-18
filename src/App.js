@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ThemeProvider from './context/ThemeProvider';
+import { GlobalStyles } from './components';
+import Calender from './routers/Calender';
+import Layout from './routers/Layout';
+import Login from './routers/Login';
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                path: '',
+                element: <Login />
+            },
+            {
+                path: 'calender',
+                element: <Calender />
+            }
+        ]
+    }
+]);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <ThemeProvider>
+                <GlobalStyles />
+                <RouterProvider router={router} />
+            </ThemeProvider>
+        </>
+    );
 }
 
 export default App;
