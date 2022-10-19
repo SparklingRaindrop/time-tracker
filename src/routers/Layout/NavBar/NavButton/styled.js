@@ -9,6 +9,10 @@ export const Wrapper = styled.button`
     background: none;
 
     color: ${({theme, $current}) => $current ? theme.colors.primary : theme.colors.grey};
+    
+    & svg {
+        color: ${({theme, $current}) => $current ? theme.colors.primary : theme.colors.grey};
+    }
 `;
 
 export const Title = styled.div`
