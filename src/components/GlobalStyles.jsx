@@ -12,4 +12,9 @@ export const GlobalStyles = createGlobalStyle`
         max-width: 100vw;
         overflow-x: hidden;
     }
+
+    input,
+    button {
+        font-size: 1.2rem;
+    }
 `;
