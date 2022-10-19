@@ -1,6 +1,11 @@
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 
+const spacing = {
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '2rem',
+}
 const colors = {
     primary: '#73C398',
     secondary: '#073127',
@@ -13,6 +18,7 @@ const colors = {
 }
 const theme = {
     colors,
+    spacing,
 };
 
 export default function ThemeProvider(props) {
