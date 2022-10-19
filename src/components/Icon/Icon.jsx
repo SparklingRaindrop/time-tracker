@@ -3,13 +3,14 @@ import { path } from './path';
 import { Svg } from './styled';
 
 export default function Icon(props) {
-    const { name } = props;
+    const { name, className } = props;
 
     return (
         <Svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="currentColor">
+            fill="currentColor"
+            className={className}>
             {
                 path[name].map((path, index) =>
                     <path key={index} fillRule="evenodd" d={path} clipRule="evenodd" />
@@ -20,5 +21,6 @@ export default function Icon(props) {
 }
 
 Icon.propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    className: PropTypes.string,
 };
