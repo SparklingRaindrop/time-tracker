@@ -2,7 +2,7 @@ import NavButton from './NavButton';
 import { Wrapper } from './styled';
 
 const navLinks = [{
-    linkTo: '',
+    linkTo: 'timekeeper',
     icon: 'clock',
     title: 'Timekeeper'
 }, {
@@ -10,9 +10,9 @@ const navLinks = [{
     icon: 'calendar',
     title: 'Calendar'
 }, {
-    linkTo: '',
+    linkTo: 'overview/projects',
     icon: 'businessBag',
-    title: 'Tasks'
+    title: 'Overview'
 }];
 
 export default function NavBar() {
