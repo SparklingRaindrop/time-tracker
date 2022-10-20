@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Controller } from '../../blocks';
 import { Modal } from '../../blocks';
@@ -18,9 +18,11 @@ import ModalCreateTask from './blocks/ModalCreateTask';
 */
 
 export default function Tasks() {
-    const { isOpen, onClose } = useOutletContext();
-    const { tasks, removeData, getProjectColorByTaskId, editData, startTimer } = useContext(UserDataContext);
+    const { isOpen, onClose, currentProjectId } = useOutletContext();
+    const { removeData, getProjectColorByTaskId, editData, startTimer, getTasksByProjectId } = useContext(UserDataContext);
+    const tasks = useMemo(() => getTasksByProjectId(currentProjectId), [currentProjectId]);
 
+    // TODO show "No tasks yet"
     return (
         <>
             <List>
