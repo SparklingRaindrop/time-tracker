@@ -1,6 +1,7 @@
 // https://www.npmjs.com/package/json-server
 // https://axios-http.com/
 import axios from 'axios';
+import uuid4 from 'uuid4';
 
 const BASE_URL = 'http://localhost:4000'
 const fetch = axios.create({
@@ -70,12 +71,62 @@ export async function fetchLogs(taskId) {
     return response;
 }
 
-export async function patchStartDate(logId) {
+export async function postStartDate(taskId) {
     const data = {
-        start: new Date().toString()
+        task_id: taskId,
+        start: new Date().toString(),
+        end: null,
+        id: uuid4()
+    };
+
+    const response = await fetch.post(`/logs`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(({ data, status }) => {
+            return {
+                status,
+                data: data,
+            };
+        })
+        .catch((error) => error);
+    return response;
+}
+
+export async function patchEndDate(logId) {
+    const data = {
+        end: new Date().toString()
     };
 
     const response = await fetch.patch(`/logs/${logId}`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(({ data, status }) => {
+            return {
+                status,
+                data: data,
+            };
+        })
+        .catch((error) => error);
+    return response;
+}
+
+export async function deleteData(endpoint) {
+    const response = await fetch.delete(endpoint)
+        .then(({ status }) => {
+            return {
+                status,
+            };
+        })
+        .catch((error) => error);
+    return response;
+}
+
+export async function patchData(endpoint, data) {
+    const response = await fetch.patch(endpoint, data, {
         headers: {
             'Content-Type': 'application/json',
         }
