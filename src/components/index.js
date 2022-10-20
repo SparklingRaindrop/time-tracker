@@ -7,6 +7,7 @@ import {List, ListItem} from './ListView';
 import Button from './Button';
 import IconButton from './IconButton';
 import InputField from './InputField';
+import Stopwatch from './Stopwatch';
 
 export {
     Icon,
@@ -18,5 +19,6 @@ export {
     ListItem,
     Button,
     IconButton,
-    InputField
+    InputField,
+    Stopwatch
 }
