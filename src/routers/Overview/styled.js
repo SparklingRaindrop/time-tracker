@@ -3,7 +3,7 @@ import { Main } from '../../components';
 import { IconButton } from '../../components';
 
 export const Tabs = styled(Main)`
-    background: ${({theme}) => theme.colors.highlight};
+    background: ${({theme, $white}) => $white ? theme.colors.primaryWhite : theme.colors.highlight};
 `;
 
 export const TabList = styled.ul`
