@@ -3,36 +3,50 @@ import { Controller } from '../../blocks';
 import { Modal } from '../../blocks';
 import ModalCreateProject from './ModalCreateProject';
 import { useOutletContext } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserDataContext } from '../../context/UserDataProvider';
 
-const test = [
+/* 
     {
         color: 'red',
         title: 'Project 1',
         id: 1,
         taskTotal: 12,
         onGoingTotal: 8
-    }, {
-        color: 'pink',
-        id: 2,
-        title: 'Project 2',
-        taskTotal: 12,
-        onGoingTotal: 8
     }
-]
+*/
 
 export default function Projects() {
     const { isOpen, onClose } = useOutletContext();
+    const { projects, getTasksByProjectId, getActiveTasksByProjectId, removeData, editData } = useContext(UserDataContext);
+
     return (
         <>
             <List>
                 {
-                    test.map((item) => (
-                        <ListItem
-                            key={item.id}
-                            values={item}
-                            separate
-                            extra={<Controller names={['remove', 'edit']} />} />
-                    ))
+                    projects.map(({ id, name, color }) => {
+
+                        return (
+                            <ListItem
+                                key={id}
+                                separate
+                                values={{
+                                    title: name,
+                                    color: color,
+                                    taskTotal: String(getTasksByProjectId(id).length),
+                                    onGoingTotal: String(getActiveTasksByProjectId(id).length),
+                                }}
+                                extra={<Controller
+                                    id={id}
+                                    buttons={[{
+                                        name: 'remove',
+                                        onClick: () => removeData(`/projects/${id}`)
+                                    }, {
+                                        name: 'edit',
+                                        onClick: () => editData(`/projects/${id}`)
+                                    }]} />} />
+                        )
+                    })
                 }
             </List>
             <Modal isOpen={isOpen} content={<ModalCreateProject onClose={onClose} />} />
