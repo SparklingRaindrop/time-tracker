@@ -11,8 +11,9 @@ export default function NavButton(props) {
     function handleOnClick() {
         navigate(linkTo);
     }
+
     return (
-        <Wrapper onClick={handleOnClick} $current={pathname.includes(linkTo)}>
+        <Wrapper onClick={handleOnClick} $current={pathname.includes(linkTo.split('/')[0])}>
             <Icon name={icon} />
             <Title>{title}</Title>
         </Wrapper>
