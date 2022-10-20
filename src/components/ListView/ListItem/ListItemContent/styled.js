@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     padding: ${({theme}) => theme.spacing.md} ${({theme}) => theme.spacing.sm};
     display: grid;
     grid-template-columns: auto 1fr auto;
-    grid-template-rows: 1.5fr 1fr;
+    grid-template-rows: 1.5fr auto;
     align-items: center;
     gap: ${({theme}) => theme.spacing.sm};
 `;
