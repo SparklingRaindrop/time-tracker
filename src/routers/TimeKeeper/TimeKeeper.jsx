@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import { Main } from '../../components';
-import OnGoingTimerList from './blocks/OnGoingTimerList';
-import StopWatch from './blocks/StopWatch';
+import AllTimerList from './blocks/AllTimerList';
+import Timer from './blocks/Timer';
 
 export default function TimeKeeper() {
+    const [currentShownTaskId, setCurrentShownTaskId] = useState('td4');
+
+    function changeCurrentTaskId(newTaskId) {
+        setCurrentShownTaskId(newTaskId);
+    }
+
     return (
         <Main>
-            <StopWatch />
-            <OnGoingTimerList />
+            <Timer currentShownTaskId={currentShownTaskId} />
+            <AllTimerList
+                currentShownTaskId={currentShownTaskId}
+                changeCurrentTaskId={changeCurrentTaskId} />
         </Main>
     )
 }
