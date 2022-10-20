@@ -4,10 +4,10 @@ import { UserDataContext } from '../../../../context/UserDataProvider';
 import { Time, Wrapper } from './styled';
 
 export default function Timer(props) {
-    const { currentShownTaskId } = props;
-    const { getLogData } = useContext(UserDataContext);
+    const { currentShownLogId } = props;
+    const { getLogDataByLogId } = useContext(UserDataContext);
 
-    const { start, end } = getLogData(currentShownTaskId);
+    const { start = 0, end = 0 } = getLogDataByLogId(currentShownLogId);
 
     return (
         <Wrapper>
@@ -17,5 +17,5 @@ export default function Timer(props) {
 }
 
 Timer.propTypes = {
-    currentShownTaskId: PropTypes.string.isRequired,
+    currentShownLogId: PropTypes.string.isRequired,
 };
