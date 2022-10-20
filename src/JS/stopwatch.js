@@ -1,23 +1,27 @@
 export function getDuration(start, end) {
     if (!start && !end) {
         return {
-            hour: 0,
-            minute: 0,
-            second: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
         }
     }
+
     const startDate = new Date(start);
-    const endDate   = end ? new Date(end) : new Date();
+    const endDate   = new Date(end);
     const difference = endDate.getTime() - startDate.getTime();
 
     let milliseconds = difference;
-    var hour = Math.floor(milliseconds / 1000 / 60 / 60);
-    milliseconds -= hour * 1000 * 60 * 60;
-    var minute = Math.floor(milliseconds / 1000 / 60);
-    milliseconds -= minute * 1000 * 60;
-    var second = Math.floor(milliseconds / 1000);
-    milliseconds -= second * 1000;
-    return {hour, minute, second}
+    const hours = Math.floor(milliseconds / 1000 / 60 / 60);
+    milliseconds -= hours * 1000 * 60 * 60;
+
+    const minutes = Math.floor(milliseconds / 1000 / 60);
+    milliseconds -= minutes * 1000 * 60;
+
+    const seconds = Math.floor(milliseconds / 1000);
+    milliseconds -= seconds * 1000;
+    
+    return {hours, minutes, seconds}
 }
 
 export function getDoubleDigit(number) {
