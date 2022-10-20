@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { getDoubleDigit, getDuration } from '../../JS/stopwatch';
 
 export default function Stopwatch(props) {
-    const { start, end } = props;
+    const { start, end, className } = props;
     const { hours, minutes, seconds } = useMemo(() => {
         return getDuration(start, end);
     }, [start, end]);
 
     return (
-        <div>
+        <div className={className}>
             {getDoubleDigit(hours)}:{getDoubleDigit(minutes)}:{getDoubleDigit(seconds)}
         </div>
     )
@@ -18,4 +18,5 @@ export default function Stopwatch(props) {
 Stopwatch.propTypes = {
     start: PropTypes.string,
     end: PropTypes.string,
+    className: PropTypes.string,
 };
