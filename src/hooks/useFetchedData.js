@@ -136,7 +136,7 @@ export default function useFetchedData() {
 
     function getActiveTasksByProjectId(projectId) {
         const targetTasks = tasks.filter(({project_id}) => project_id === projectId);
-        const targetLogs = targetTasks.map(task => logs.find(log => log.task_id === task.id));
+        const targetLogs = targetTasks.map(task => logs.filter(log => log.task_id === task.id)).flat();
         return targetLogs.filter(log => log.isActive);
     }
 
