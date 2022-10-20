@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Main } from '../../components';
+import { UserDataContext } from '../../context/UserDataProvider';
 import AllTimerList from './blocks/AllTimerList';
 import Timer from './blocks/Timer';
 
 export default function TimeKeeper() {
-    const [currentShownTaskId, setCurrentShownTaskId] = useState('td4');
+    const { logs } = useContext(UserDataContext);
+    const [currentShownLogId, setCurrentShownLogId] = useState(logs.find(({ start, isActive }) => !start || isActive)?.id || null);
 
-    function changeCurrentTaskId(newTaskId) {
-        setCurrentShownTaskId(newTaskId);
+    function changeCurrentLogId(newLogId) {
+        setCurrentShownLogId(newLogId);
     }
 
     return (
         <Main>
-            <Timer currentShownTaskId={currentShownTaskId} />
+            <Timer currentShownLogId={currentShownLogId} />
             <AllTimerList
-                currentShownTaskId={currentShownTaskId}
-                changeCurrentTaskId={changeCurrentTaskId} />
+                currentShownLogId={currentShownLogId}
+                changeCurrentLogId={changeCurrentLogId} />
         </Main>
     )
 }
