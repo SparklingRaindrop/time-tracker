@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Icon from '../../components/Icon/Icon';
+import { IconButton } from '../../components';
 
-export const ControllerIcon = styled(Icon)`
+export const ControllerButton = styled(IconButton)`
     width: 2rem;
 `;
 
