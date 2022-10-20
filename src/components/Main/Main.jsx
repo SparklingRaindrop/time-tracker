@@ -10,5 +10,8 @@ export default function Main(props) {
 
 Main.propTypes = {
     className: PropTypes.string,
-    children: PropTypes.array,
+    children: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ]),
 };
