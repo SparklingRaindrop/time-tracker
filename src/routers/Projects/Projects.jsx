@@ -17,7 +17,7 @@ import { UserDataContext } from '../../context/UserDataProvider';
 */
 
 export default function Projects() {
-    const { isOpen, onClose, currentProjectId } = useOutletContext();
+    const { isOpen, onClose, currentProjectId, updateCurrentProjectId } = useOutletContext();
     const {
         projects,
         getTasksByProjectId,
@@ -42,6 +42,7 @@ export default function Projects() {
                                     taskTotal: String(getTasksByProjectId(id).length),
                                     onGoingTotal: String(getActiveTasksByProjectId(id).length),
                                 }}
+                                onClick={() => updateCurrentProjectId(id)}
                                 extra={<Controller
                                     id={id}
                                     buttons={[{
