@@ -1,45 +1,52 @@
+import { useContext } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Controller } from '../../blocks';
 import { Modal } from '../../blocks';
 import { List, ListItem } from '../../components';
+import { UserDataContext } from '../../context/UserDataProvider';
 import ModalCreateTask from './blocks/ModalCreateTask';
 
 
-const tasks = [
+/* 
     {
-        color: 'red',
-        title: 'Clean the office',
-        log: '00:00:00',
-        status: 'pending',
-        id: '123'
-    }, {
-        color: 'red',
-        title: 'Clean the office',
-        log: '00:00:00',
-        status: 'pending',
-        id: '456'
-    }, {
         color: 'red',
         title: 'Clean the office',
         log: '00:00:00',
         status: 'finished',
         id: '789'
     }
-]
+*/
 
 export default function Tasks() {
     const { isOpen, onClose } = useOutletContext();
+    const { tasks, removeData, getProjectColorByTaskId, editData, startTimer } = useContext(UserDataContext);
 
     return (
         <>
             <List>
                 {
-                    tasks.map(item => (
+                    tasks.map(({ id, title }) => (
                         <ListItem
-                            key={item.id}
-                            values={item}
+                            key={id}
+                            values={{
+                                title,
+                                color: getProjectColorByTaskId(id),
+                                log: false,
+                            }}
                             separate
-                            extra={<Controller names={['remove', 'edit']} />} />
+                            extra={
+                                <Controller
+                                    buttons={[{
+                                        name: 'start',
+                                        onClick: () => startTimer(id)
+                                    }, {
+                                        name: 'edit',
+                                        onClick: () => editData(`/tasks/${id}`)
+                                    }, {
+                                        name: 'remove',
+                                        onClick: () => removeData(`/tasks/${id}`)
+                                    }]} />
+                            } />
                     ))
                 }
             </List>
