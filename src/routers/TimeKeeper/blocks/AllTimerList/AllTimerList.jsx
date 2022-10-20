@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Controller } from '../../../../blocks';
 import { UserDataContext } from '../../../../context/UserDataProvider';
 import { ListWrapper, ListItemWrapper } from './styled';
+import { getStatus } from '../../../../JS/dataParser';
 
 /* 
     {
@@ -14,40 +15,61 @@ import { ListWrapper, ListItemWrapper } from './styled';
     }
 */
 
-function createButtonValues(start, end, isActive) {
-    if (isActive) {
-        return 'stop';
-    } else if (!start && !end) {
-        return 'start';
-    } else {
-        return 'remove';
-    }
-}
 
 export default function AllTimerList(props) {
-    const { changeCurrentTaskId, currentShownTaskId } = props;
-    const { tasks, getProjectColor, getLogData } = useContext(UserDataContext);
+    const { changeCurrentLogId, currentShownLogId } = props;
+    const {
+        tasks,
+        getProjectColorByTaskId,
+        stopTimer,
+        removeData,
+        logs,
+        getTaskTitleByTaskId
+    } = useContext(UserDataContext);
+
+    function createButtonValues(isActive, logId) {
+        const result = [];
+
+        if (isActive) {
+            result.push({
+                name: 'stop',
+                onClick: () => stopTimer(logId)
+            });
+        } else if (!isActive) {
+            result.push({
+                name: 'remove',
+                onClick: () => removeData(`logs/${logId}`, logId)
+            });
+        }
+        return result;
+    }
 
     if (tasks.length === 0) return;
+    // TODO Do something for if there is no timer to show
     return (
         <ListWrapper filled>
             {
-                tasks.map(({ id, project_id, title }) => {
-                    const { start, end, isActive } = getLogData(id);
+                logs.map(({ id, start, end, isActive, task_id }) => {
+                    if (!isActive && end) return;
                     return (
                         <ListItemWrapper
                             key={id}
-                            current={currentShownTaskId === id}
+                            current={id === currentShownLogId}
                             values={{
-                                title,
+                                title: getTaskTitleByTaskId(task_id),
                                 isActive,
-                                color: getProjectColor(project_id),
+                                color: getProjectColorByTaskId(task_id),
                                 log: true,
                                 start: start,
                                 end: end,
+                                status: getStatus(isActive, end)
                             }}
-                            extra={<Controller buttons={[createButtonValues(start, end, isActive)]} />}
-                            onClick={() => changeCurrentTaskId(id)} />
+                            extra={
+                                <Controller
+                                    buttons={createButtonValues(isActive, id)}
+                                    disabled={id !== currentShownLogId} />
+                            }
+                            onClick={() => changeCurrentLogId(id)} />
                     )
                 })
             }
@@ -56,6 +78,6 @@ export default function AllTimerList(props) {
 }
 
 AllTimerList.propTypes = {
-    changeCurrentTaskId: PropTypes.func,
-    currentShownTaskId: PropTypes.string,
+    changeCurrentLogId: PropTypes.func,
+    currentShownLogId: PropTypes.string,
 };
