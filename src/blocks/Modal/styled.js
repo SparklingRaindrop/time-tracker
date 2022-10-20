@@ -58,14 +58,6 @@ export const Label = styled.label`
     text-transform: capitalize;
 `;
 
-export const Input = styled.input`
-    padding: 0.7em 1em;
-
-    &:placeholder {
-        text-transform: capitalize;
-    }
-`;
-
 export const Colors = styled.div`
     display: grid;
     grid-template-columns: repeat(5, auto);

@@ -6,6 +6,7 @@ import Wrapper from './Wrapper';
 import {List, ListItem} from './ListView';
 import Button from './Button';
 import IconButton from './IconButton';
+import InputField from './InputField';
 
 export {
     Icon,
@@ -16,5 +17,6 @@ export {
     List,
     ListItem,
     Button,
-    IconButton
+    IconButton,
+    InputField
 }
