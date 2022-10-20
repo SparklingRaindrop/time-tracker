@@ -17,18 +17,24 @@ import { UserDataContext } from '../../context/UserDataProvider';
 */
 
 export default function Projects() {
-    const { isOpen, onClose } = useOutletContext();
-    const { projects, getTasksByProjectId, getActiveTasksByProjectId, removeData, editData } = useContext(UserDataContext);
+    const { isOpen, onClose, currentProjectId } = useOutletContext();
+    const {
+        projects,
+        getTasksByProjectId,
+        getActiveTasksByProjectId,
+        removeData,
+        editData
+    } = useContext(UserDataContext);
 
     return (
         <>
             <List>
                 {
                     projects.map(({ id, name, color }) => {
-
                         return (
                             <ListItem
                                 key={id}
+                                current={id === currentProjectId}
                                 separate
                                 values={{
                                     title: name,
