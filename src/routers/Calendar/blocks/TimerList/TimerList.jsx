@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { UserDataContext } from '../../../../context/UserDataProvider';
 import { ListWrapper, ListItemWrapper } from './styled';
+import { getStatus } from '../../../../JS/dataParser';
 
 /*
     color: 'red',
@@ -10,25 +11,25 @@ import { ListWrapper, ListItemWrapper } from './styled';
     log: true
  */
 export default function TimerList() {
-    const { tasks, logs, getProjectColor, getLogData } = useContext(UserDataContext);
+    const { logs, getProjectColorByTaskId, getTaskTitleByTaskId } = useContext(UserDataContext);
 
     if (logs.length === 0) return;
     return (
         <ListWrapper filled>
             {
-                tasks.map(({ project_id, title, id }) => {
-                    const { start, end, isActive } = getLogData(id);
-                    return <ListItemWrapper
+                logs.map(({ id, start, end, isActive, task_id }) => (
+                    <ListItemWrapper
                         key={id}
                         values={{
-                            color: getProjectColor(project_id),
-                            title,
+                            color: getProjectColorByTaskId(task_id),
+                            title: getTaskTitleByTaskId(task_id),
                             isActive,
                             start: start,
                             end: end,
-                            log: true
+                            log: true,
+                            status: getStatus(isActive, end)
                         }} />
-                })
+                ))
             }
         </ListWrapper>
     )
