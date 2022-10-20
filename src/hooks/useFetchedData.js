@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     getUserId,
     getProjects,
@@ -12,16 +12,9 @@ export default function useFetchedData() {
     const [projects, setProjects] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [logs, setLogs] = useState([]);
-    const onGoingTimers = useMemo(() => {
-        const result = [];
-        logs.forEach((log, index) => {
-            if (log.start && !log.end) {
-                result.push(index);
-            }
-        });
-        return result;
-    }, [logs]);
+    const [onGoingTimers, setOnGoingTimers] = useState([]);
 
+    // Getting Logs that are related with the user
     useEffect(() => {
         async function fetchTasks(projectIs) {
             const { status, data } = await getTasks(projectIs);
@@ -43,6 +36,7 @@ export default function useFetchedData() {
         updateTasks();
     }, [projects]);
 
+    // Getting Logs that are related with tasks
     useEffect(() => {
         async function fetchLogs(taskId) {
             const { status, data } = await getLogs(taskId);
@@ -63,6 +57,20 @@ export default function useFetchedData() {
         updateLogs(tasks);
     }, [tasks]);
 
+    // Generating list for logs that needs to update in the next useEffect
+    useEffect(() => {
+        // Only run when onGoingTimers doesn't exist
+        if (logs.length === 0 || onGoingTimers.length > 0) return;
+        const result = [];
+        logs.forEach((log, index) => {
+            if (log.start && !log.end) {
+                result.push(index);
+            }
+        });
+        setOnGoingTimers(result);
+    }, [logs, onGoingTimers]);
+
+    // Updating "end" value for logs that are on going.
     useEffect(() => {
         if (onGoingTimers.length === 0) return;
 
