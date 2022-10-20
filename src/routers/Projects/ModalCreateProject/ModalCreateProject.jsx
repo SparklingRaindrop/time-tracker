@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Button } from '../../../components';
-import { Wrapper, Title, Input, Label, Colors, ColorSwatch, CloseButton, Header } from '../../../blocks'
+import { Button, InputField } from '../../../components';
+import { Wrapper, Title, Label, Colors, ColorSwatch, CloseButton, Header } from '../../../blocks'
 
 const test = {
     title: 'Create new project'
@@ -23,7 +23,7 @@ export default function ModalCreateProject(props) {
             </Header>
             <div>
                 <Label>project name</Label>
-                <Input placeholder='project name' />
+                <InputField placeholder='project name' />
             </div>
             <Colors>
                 {colors.map(color => <ColorSwatch key={color} $color={color} />)}
