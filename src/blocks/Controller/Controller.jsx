@@ -1,18 +1,30 @@
 import PropTypes from 'prop-types';
-import { Wrapper, ControllerIcon } from './styled';
+import { Wrapper, ControllerButton } from './styled';
 
+/* 
+    buttons = [{
+        name: string,
+        function: func
+    }]
+
+*/
 export default function Controller(props) {
-    const { names } = props;
+    const { buttons } = props;
 
     return (
         <Wrapper>
             {
-                names.map(name => <ControllerIcon key={name} name={name} />)
+                buttons.map(name => (
+                    <ControllerButton
+                        key={name}
+                        name={name}
+                        onClick={() => console.log('test')} />
+                ))
             }
         </Wrapper>
     )
 }
 
 Controller.propTypes = {
-    names: PropTypes.array.isRequired
+    buttons: PropTypes.array.isRequired
 };
