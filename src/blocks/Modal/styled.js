@@ -70,7 +70,7 @@ export const ColorSwatch = styled.button`
     width: 1.5rem;
     padding: 1.5rem;
     border: none;
-    outline: ${({theme, $selected}) => $selected && `5px solid ${theme.colors.highlight}`};
+    outline: ${({theme, $selected}) => $selected && `5px solid ${theme.colors.secondary}`};
     background: ${({$color}) => $color};
     border-radius: 50%;
 `;
