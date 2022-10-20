@@ -7,18 +7,21 @@ import { Wrapper, ControllerButton } from './styled';
         function: func
     }]
 
+    name = stop, start, remove
 */
+
 export default function Controller(props) {
-    const { buttons } = props;
+    const { buttons, disabled } = props;
 
     return (
         <Wrapper>
             {
-                buttons.map(name => (
+                buttons.map(({ name, onClick }) => (
                     <ControllerButton
                         key={name}
                         name={name}
-                        onClick={() => console.log('test')} />
+                        onClick={onClick}
+                        disabled={disabled} />
                 ))
             }
         </Wrapper>
@@ -26,5 +29,6 @@ export default function Controller(props) {
 }
 
 Controller.propTypes = {
-    buttons: PropTypes.array.isRequired
+    buttons: PropTypes.array.isRequired,
+    disabled: PropTypes.bool,
 };
