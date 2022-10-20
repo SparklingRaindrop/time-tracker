@@ -4,23 +4,25 @@ import ThemeProvider from './context/ThemeProvider';
 import { GlobalStyles } from './components';
 import Calendar from './routers/Calendar';
 import Layout from './routers/Layout';
-import Login from './routers/Login';
+import Login from './routers/Login/Login';
 import TimeKeeper from './routers/TimeKeeper/TimeKeeper';
 import Overview from './routers/Overview';
 import Tasks from './routers/Tasks';
 import Projects from './routers/Projects';
+import UserDataProvider from './context/UserDataProvider';
 
 const router = createBrowserRouter([
     {
+        index: true,
         path: '/',
+        element: <Login />,
+    },
+    {
+        path: ':id',
         element: <Layout />,
         children: [
             {
                 index: true,
-                path: '',
-                element: <Login />
-            },
-            {
                 path: 'calendar',
                 element: <Calendar />
             },
@@ -48,10 +50,12 @@ const router = createBrowserRouter([
 function App() {
     return (
         <>
-            <ThemeProvider>
-                <GlobalStyles />
-                <RouterProvider router={router} />
-            </ThemeProvider>
+            <UserDataProvider>
+                <ThemeProvider>
+                    <GlobalStyles />
+                    <RouterProvider router={router} />
+                </ThemeProvider>
+            </UserDataProvider>
         </>
     );
 }
