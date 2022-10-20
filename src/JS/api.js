@@ -7,10 +7,9 @@ const fetch = axios.create({
     baseURL: BASE_URL,
 });
 
-export async function getUserId(value) {
+export async function fetchUserId(value) {
     const response = await fetch.get(`/users?username=${value}`)
-        .then(res => {
-            const { data, status } = res;
+        .then(({ data, status }) => {
             if (data.length === 0 || data.length > 1) {
                 // the server will never response with 400
                 return 400;
@@ -26,10 +25,9 @@ export async function getUserId(value) {
     return response;
 }
 
-export async function getProjects(userId) {
+export async function fetchProjects(userId) {
     const response = await fetch.get(`/projects?user_id=${userId}`)
-        .then(res => {
-            const { data, status } = res;
+        .then(({ data, status }) => {
             if (status === 400) {
                 return { status };
             }
@@ -42,10 +40,9 @@ export async function getProjects(userId) {
     return response;
 }
 
-export async function getTasks(projectId) {
+export async function fetchTasks(projectId) {
     const response = await fetch.get(`/tasks?project_id=${projectId}`)
-        .then(res => {
-            const { data, status } = res;
+        .then(({ data, status }) => {
             if (status === 400) {
                 return { status };
             }
@@ -58,13 +55,32 @@ export async function getTasks(projectId) {
     return response;
 }
 
-export async function getLogs(taskId) {
+export async function fetchLogs(taskId) {
     const response = await fetch.get(`/logs?task_id=${taskId}`)
-        .then(res => {
-            const { data, status } = res;
+        .then(({data, status }) => {
             if (status === 400) {
                 return { status };
             }
+            return {
+                status,
+                data: data,
+            };
+        })
+        .catch((error) => error);
+    return response;
+}
+
+export async function patchStartDate(logId) {
+    const data = {
+        start: new Date().toString()
+    };
+
+    const response = await fetch.patch(`/logs/${logId}`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(({ data, status }) => {
             return {
                 status,
                 data: data,

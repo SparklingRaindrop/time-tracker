@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import {
-    getUserId,
-    getProjects,
-    getTasks,
-    getLogs
+    fetchUserId,
+    fetchProjects,
+    fetchTasks,
+    fetchLogs,
+    patchStartDate,
 } from '../JS/api';
 
 export default function useFetchedData() {
@@ -16,8 +17,8 @@ export default function useFetchedData() {
 
     // Getting Logs that are related with the user
     useEffect(() => {
-        async function fetchTasks(projectIs) {
-            const { status, data } = await getTasks(projectIs);
+        async function getTasks(projectIs) {
+            const { status, data } = await fetchTasks(projectIs);
             if (status === 200) {
                 return data;
             } else {
@@ -27,7 +28,7 @@ export default function useFetchedData() {
 
         async function updateTasks() {
             const projectIdList = projects.map(({id}) => id);
-            const fetchList = projectIdList.map(projectId => fetchTasks(projectId));
+            const fetchList = projectIdList.map(projectId => getTasks(projectId));
             const results = await Promise.all(fetchList);
             setTasks(results.flat());
         }
@@ -39,7 +40,7 @@ export default function useFetchedData() {
     // Getting Logs that are related with tasks
     useEffect(() => {
         async function fetchLogs(taskId) {
-            const { status, data } = await getLogs(taskId);
+            const { status, data } = await fetchLogs(taskId);
             if (status === 200) {
                 return data;
             } else {
@@ -108,6 +109,13 @@ export default function useFetchedData() {
         };
     }
 
+    async function startTimer(logId) {
+        const {status} = await patchStartDate(logId);
+        if (status === 200) {
+            fetchLogs();
+        }
+    }
+
     return {
         projects,
         userId,
@@ -115,9 +123,10 @@ export default function useFetchedData() {
         logs,
         //setUserId, DO NOT DELETE
         setProjects,
-        getUserId,
-        getProjects,
+        fetchUserId,
+        fetchProjects,
         getProjectColor,
-        getLogData
+        getLogData,
+        startTimer
     }
 }
