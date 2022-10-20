@@ -1,20 +1,10 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
 import Stopwatch from '../../../Stopwatch/Stopwatch';
 
 import { ColorMarker, Wrapper, Title, Log, Status } from './styled';
 
 export default function ListItemContent(props) {
-    const { color, title, log, start, end, onGoingTotal, taskTotal, isActive } = props;
-    const status = useMemo(() => {
-        if (isActive) {
-            return 'on going';
-        } else if (!start && !end) {
-            return 'pending';
-        } else {
-            return 'finished';
-        }
-    }, [start, end]);
+    const { color, title, log, start, end, onGoingTotal, taskTotal, status } = props;
 
     return (
         <Wrapper>
@@ -46,6 +36,7 @@ ListItemContent.propTypes = {
     isActive: PropTypes.bool,
     start: PropTypes.string,
     end: PropTypes.string,
-    onGoingTotal: PropTypes.number,
-    taskTotal: PropTypes.number,
+    onGoingTotal: PropTypes.string,
+    taskTotal: PropTypes.string,
+    status: PropTypes.string,
 };
