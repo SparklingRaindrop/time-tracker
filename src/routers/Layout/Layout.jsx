@@ -7,12 +7,12 @@ import { UserDataContext } from '../../context/UserDataProvider';
 
 export default function Layout() {
     const { pathname } = useLocation();
-    const { userId, getProjects, setProjects } = useContext(UserDataContext);
+    const { userId, fetchProjects, setProjects } = useContext(UserDataContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function fetchProjects() {
-            const { status, data } = await getProjects(userId);
+        async function getProjects() {
+            const { status, data } = await fetchProjects(userId);
             if (status === 200) {
                 setProjects(data);
             }
@@ -22,7 +22,7 @@ export default function Layout() {
             navigate('/');
             return;
         }
-        fetchProjects();
+        getProjects();
     }, [userId]);
 
     return (

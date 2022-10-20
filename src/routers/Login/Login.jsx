@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login() {
     const [inputValue, setInputValue] = useState('');
     const [isError, setIsError] = useState(false);
-    const { setUserId, userId, getUserId } = useContext(UserDataContext);
+    const { setUserId, userId, fetchUserId } = useContext(UserDataContext);
     const navigate = useNavigate();
 
     function handleOnChange(event) {
@@ -18,7 +18,7 @@ export default function Login() {
         if (isError) {
             setIsError(false);
         }
-        const { status, data } = await getUserId(inputValue);
+        const { status, data } = await fetchUserId(inputValue);
         if (status !== 200) {
             setIsError(true);
         } else {
