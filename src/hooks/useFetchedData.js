@@ -94,6 +94,20 @@ export default function useFetchedData() {
         return () => clearInterval(id);
     }, [onGoingTimers]);
 
+    function getProjectColor(projectId) {
+        const parentProject = projects.find(p => p.id === projectId);
+        return parentProject.color;
+    }
+
+    function getLogData(taskId) {
+        const index = logs.findIndex(l => l.task_id === taskId);
+        const targetLog = logs.find(l => l.task_id === taskId);
+        return {
+            ...targetLog,
+            isActive: onGoingTimers.includes(index)
+        };
+    }
+
     return {
         projects,
         userId,
@@ -103,5 +117,7 @@ export default function useFetchedData() {
         setProjects,
         getUserId,
         getProjects,
+        getProjectColor,
+        getLogData
     }
 }
