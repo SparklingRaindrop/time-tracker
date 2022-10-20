@@ -4,7 +4,10 @@ import {
     fetchProjects,
     fetchTasks,
     fetchLogs,
-    patchStartDate,
+    postStartDate,
+    patchEndDate,
+    deleteData,
+    patchData,
 } from '../JS/api';
 
 export default function useFetchedData() {
@@ -15,61 +18,74 @@ export default function useFetchedData() {
     const [logs, setLogs] = useState([]);
     const [onGoingTimers, setOnGoingTimers] = useState([]);
 
-    // Getting Logs that are related with the user
-    useEffect(() => {
-        async function getTasks(projectIs) {
-            const { status, data } = await fetchTasks(projectIs);
-            if (status === 200) {
-                return data;
+    async function getTasks(projectIs) {
+        const { status, data } = await fetchTasks(projectIs);
+        if (status === 200) {
+            return data;
+        } else {
+            console.log('error');
+        }
+    }
+    async function getProjects() {
+        const { status, data } = await fetchProjects(userId);
+        if (status === 200) {
+            setProjects(data);
+        }
+    }
+
+    async function updateTasks() {
+        const projectIdList = projects.map(({id}) => id);
+        const fetchList = projectIdList.map(projectId => getTasks(projectId));
+        const results = await Promise.all(fetchList);
+        setTasks(results.flat());
+    }
+
+    async function getLogs(taskId) {
+        const { status, data } = await fetchLogs(taskId);
+        if (status === 200) {
+            return data;
+        } else {
+            console.log('error');
+        }
+    }
+
+    async function updateLogs(newTasks) {
+        const taskIdList = newTasks.map(({id}) => id);
+        const fetchList = taskIdList.map(taskId => getLogs(taskId));
+        const data = await Promise.all(fetchList);
+        const result = data.flat().map(log => {
+            const {start, end} = log;
+            if (start && !end) {
+                log.isActive = true
             } else {
-                console.log('error');
+                log.isActive = false
             }
-        }
-
-        async function updateTasks() {
-            const projectIdList = projects.map(({id}) => id);
-            const fetchList = projectIdList.map(projectId => getTasks(projectId));
-            const results = await Promise.all(fetchList);
-            setTasks(results.flat());
-        }
-
-        
+            return log;
+        });
+        setLogs(result);
+    }
+    
+    // Getting tasks that are related with projects
+    useEffect(() => {
         updateTasks();
     }, [projects]);
 
     // Getting Logs that are related with tasks
     useEffect(() => {
-        async function fetchLogs(taskId) {
-            const { status, data } = await fetchLogs(taskId);
-            if (status === 200) {
-                return data;
-            } else {
-                console.log('error');
-            }
-        }
-
-        async function updateLogs(newTasks) {
-            const taskIdList = newTasks.map(({id}) => id);
-            const fetchList = taskIdList.map(taskId => fetchLogs(taskId));
-            const results = await Promise.all(fetchList);
-            setLogs(results.flat());
-        }
-
         updateLogs(tasks);
     }, [tasks]);
 
-    // Generating list for logs that needs to update in the next useEffect
+    // Generating list for active logs
     useEffect(() => {
-        // Only run when onGoingTimers doesn't exist
-        if (logs.length === 0 || onGoingTimers.length > 0) return;
+        if (logs.length === 0) return;
         const result = [];
-        logs.forEach((log, index) => {
-            if (log.start && !log.end) {
+        logs.forEach(({isActive}, index) => {
+            if (isActive) {
                 result.push(index);
             }
         });
         setOnGoingTimers(result);
-    }, [logs, onGoingTimers]);
+    }, [logs]);
 
     // Updating "end" value for logs that are on going.
     useEffect(() => {
@@ -95,24 +111,66 @@ export default function useFetchedData() {
         return () => clearInterval(id);
     }, [onGoingTimers]);
 
-    function getProjectColor(projectId) {
+    function getProjectColorByTaskId(taskId) {
+        const projectId = tasks.find(task => task.id === taskId).project_id;
         const parentProject = projects.find(p => p.id === projectId);
         return parentProject.color;
     }
 
-    function getLogData(taskId) {
-        const index = logs.findIndex(l => l.task_id === taskId);
-        const targetLog = logs.find(l => l.task_id === taskId);
-        return {
-            ...targetLog,
-            isActive: onGoingTimers.includes(index)
-        };
+    function getLogDataByTaskId(taskId) {
+        const result = logs.filter(l => l.task_id === taskId);
+        return result.length === 0 ? undefined : result;
     }
 
-    async function startTimer(logId) {
-        const {status} = await patchStartDate(logId);
+    function getTasksByProjectId(projectId) {
+        return tasks.filter(task => task.project_id === projectId);
+    }
+
+    function getLogDataByLogId(logId) {
+        return logs.find(log => log.id === logId);
+    }
+
+    function getTaskTitleByTaskId(taskId) {
+        return tasks.find(task => task.id === taskId).title;
+    }
+
+    function getActiveTasksByProjectId(projectId) {
+        const targetTasks = tasks.filter(({project_id}) => project_id === projectId);
+        const targetLogs = targetTasks.map(task => logs.find(log => log.task_id === task.id));
+        return targetLogs.filter(log => log.isActive);
+    }
+
+    async function startTimer(taskId) {
+        const {status} = await postStartDate(taskId);
+        if (status === 201) {
+            // TODO check status for fetch?
+            updateLogs(tasks);
+        }
+    }
+    
+    async function stopTimer(logId) {
+        const {status} = await patchEndDate(logId);
         if (status === 200) {
-            fetchLogs();
+            // TODO check status for fetch?
+            updateLogs(tasks)
+        }
+    }
+
+    async function removeData(endpoint) {
+        const {status} = await deleteData(endpoint);
+        if (status === 200) {
+            // TODO check status for fetch?
+            getProjects();
+        } else {
+            console.error('Error in removeData')
+        }
+    }
+
+    async function editData(endpoint, data) {
+        const {status} = await patchData(endpoint, data);
+        if (status === 200) {
+            // check status for fetch?
+            getProjects();
         }
     }
 
@@ -122,11 +180,17 @@ export default function useFetchedData() {
         tasks,
         logs,
         //setUserId, DO NOT DELETE
-        setProjects,
+        getProjects,
         fetchUserId,
-        fetchProjects,
-        getProjectColor,
-        getLogData,
-        startTimer
+        getLogDataByLogId,
+        getLogDataByTaskId,
+        getTasksByProjectId,
+        getActiveTasksByProjectId,
+        getProjectColorByTaskId,
+        getTaskTitleByTaskId,
+        startTimer,
+        stopTimer,
+        removeData,
+        editData,
     }
 }
