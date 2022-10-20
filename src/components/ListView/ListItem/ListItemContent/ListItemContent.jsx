@@ -5,14 +5,14 @@ import Stopwatch from '../../../Stopwatch/Stopwatch';
 import { ColorMarker, Wrapper, Title, Log, Status } from './styled';
 
 export default function ListItemContent(props) {
-    const { color, title, log, start, end, onGoingTotal, taskTotal } = props;
+    const { color, title, log, start, end, onGoingTotal, taskTotal, isActive } = props;
     const status = useMemo(() => {
-        if (end) {
-            return 'finished';
-        } else if (start) {
+        if (isActive) {
             return 'on going';
-        } else {
+        } else if (!start && !end) {
             return 'pending';
+        } else {
+            return 'finished';
         }
     }, [start, end]);
 
@@ -43,6 +43,7 @@ ListItemContent.propTypes = {
     color: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     log: PropTypes.bool,
+    isActive: PropTypes.bool,
     start: PropTypes.string,
     end: PropTypes.string,
     onGoingTotal: PropTypes.number,
