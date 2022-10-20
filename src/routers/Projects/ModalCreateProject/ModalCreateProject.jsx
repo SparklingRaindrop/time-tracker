@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types';
 import { Button, InputField } from '../../../components';
 import { Wrapper, Title, Label, Colors, ColorSwatch, CloseButton, Header } from '../../../blocks'
-
-const test = {
-    title: 'Create new project'
-}
+import { useState } from 'react';
 
 const colors = [
     '#FF80ED', '#00FFFF', '#FF7373', '#FFD700', '#008080',
@@ -13,20 +10,46 @@ const colors = [
 
 export default function ModalCreateProject(props) {
     const { onClose } = props;
-    const { title } = test;
+    const [inputValue, setInputValue] = useState({
+        name: '',
+        color: colors[0]
+    });
+
+    function handleOnChange(event) {
+        setInputValue(prev => ({
+            ...prev,
+            name: event.target.value
+        }));
+    }
+
+    function updateSelectedColor(color) {
+        setInputValue(prev => ({
+            ...prev,
+            color,
+        }))
+    }
 
     return (
         <Wrapper>
             <Header>
-                <Title>{title}</Title>
+                <Title>Create new project</Title>
                 <CloseButton onClick={onClose} name='close' />
             </Header>
             <div>
                 <Label>project name</Label>
-                <InputField placeholder='project name' />
+                <InputField
+                    placeholder='project name'
+                    value={inputValue.name}
+                    onChange={handleOnChange} />
             </div>
             <Colors>
-                {colors.map(color => <ColorSwatch key={color} $color={color} />)}
+                {colors.map(color => (
+                    <ColorSwatch
+                        key={color}
+                        $color={color}
+                        $selected={color === inputValue.color}
+                        onClick={() => updateSelectedColor(color)} />
+                ))}
             </Colors>
             <Button label='Create new project' onClick={() => console.log('Create new project')} />
         </Wrapper>
