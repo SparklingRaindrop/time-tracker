@@ -4,10 +4,9 @@ import { useOutletContext } from 'react-router-dom';
 import { UserDataContext } from '../../../context/UserDataProvider';
 
 
-import { ModalCreateProject } from '../../../blocks/Projects';
-
 import { Controller, ListItem, Modal } from '../../../components';
 import { ListWrapper } from './styled';
+import { ProjectModal } from '../../../blocks/Projects';
 
 /* 
     {
@@ -20,20 +19,20 @@ import { ListWrapper } from './styled';
 */
 
 export default function Projects() {
-    const { isOpen, onClose, currentProjectId, updateCurrentProjectId } = useOutletContext();
+    const { currentProjectId, updateCurrentProjectId, onOpen, isOpen } = useOutletContext();
     const {
         projects,
         getTasksByProjectId,
         getActiveTasksByProjectId,
         removeData,
-        editData
     } = useContext(UserDataContext);
 
     return (
         <>
             <ListWrapper>
                 {
-                    projects.map(({ id, name, color }) => {
+                    projects.map(project => {
+                        const { id, name, color } = project;
                         return (
                             <ListItem
                                 key={id}
@@ -53,13 +52,13 @@ export default function Projects() {
                                         onClick: () => removeData(`/projects/${id}`)
                                     }, {
                                         name: 'edit',
-                                        onClick: () => editData(`/projects/${id}`)
+                                        onClick: () => onOpen(project)
                                     }]} />} />
                         )
                     })
                 }
             </ListWrapper>
-            <Modal isOpen={isOpen} content={<ModalCreateProject onClose={onClose} />} />
+            <Modal isOpen={isOpen} content={<ProjectModal />} />
         </>
     )
 }
