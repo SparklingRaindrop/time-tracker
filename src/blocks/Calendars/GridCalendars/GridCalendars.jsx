@@ -1,4 +1,4 @@
-import useCalendar from '../../../../hooks/useCalendar';
+import useCalendar from '../../../hooks/useCalendar';
 import Month from './Month';
 import { OuterWrapper } from './styled';
 

@@ -8,6 +8,19 @@ import Button from './Button';
 import IconButton from './IconButton';
 import InputField from './InputField';
 import Stopwatch from './Stopwatch';
+import Tab from './Tab';
+import Controller from './Controller';
+import {
+    Modal,
+    ModalWrapper,
+    ModalTitle,
+    ModalLabel,
+    ModalColors,
+    ModalColorSwatch,
+    ModalCloseButton,
+    ModalHeader,
+    ModalTag
+} from './Modal';
 
 export {
     Icon,
@@ -20,5 +33,16 @@ export {
     Button,
     IconButton,
     InputField,
-    Stopwatch
+    Stopwatch,
+    Tab,
+    Controller,
+    Modal,
+    ModalWrapper,
+    ModalTitle,
+    ModalLabel,
+    ModalColors,
+    ModalColorSwatch,
+    ModalCloseButton,
+    ModalHeader,
+    ModalTag
 }

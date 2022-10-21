@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
-import { UserDataContext } from '../../../../context/UserDataProvider';
+
+import { UserDataContext } from '../../../context/UserDataProvider';
+
 import { Time, Wrapper } from './styled';
 
 export default function Timer(props) {

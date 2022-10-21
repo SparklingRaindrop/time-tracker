@@ -1,8 +1,7 @@
 import { useContext, useState } from 'react';
 import { Main } from '../../components';
 import { UserDataContext } from '../../context/UserDataProvider';
-import AllTimerList from './blocks/AllTimerList';
-import Timer from './blocks/Timer';
+import { Timer, AllTimerList } from '../../blocks/TimeKeeper'
 
 export default function TimeKeeper() {
     const { logs } = useContext(UserDataContext);

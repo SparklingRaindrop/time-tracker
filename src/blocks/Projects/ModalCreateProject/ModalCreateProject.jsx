@@ -1,7 +1,18 @@
 import PropTypes from 'prop-types';
+import { useContext, useState } from 'react';
+
+import { UserDataContext } from '../../../context/UserDataProvider';
+
 import { Button, InputField } from '../../../components';
-import { Wrapper, Title, Label, Colors, ColorSwatch, CloseButton, Header } from '../../../blocks'
-import { useState } from 'react';
+import {
+    ModalWrapper,
+    ModalTitle,
+    ModalLabel,
+    ModalColors,
+    ModalColorSwatch,
+    ModalCloseButton,
+    ModalHeader,
+} from '../../../components';
 
 const colors = [
     '#FF80ED', '#00FFFF', '#FF7373', '#FFD700', '#008080',
@@ -14,6 +25,7 @@ export default function ModalCreateProject(props) {
         name: '',
         color: colors[0]
     });
+    const { createProject } = useContext(UserDataContext);
 
     function handleOnChange(event) {
         setInputValue(prev => ({
@@ -30,29 +42,29 @@ export default function ModalCreateProject(props) {
     }
 
     return (
-        <Wrapper>
-            <Header>
-                <Title>Create new project</Title>
-                <CloseButton onClick={onClose} name='close' />
-            </Header>
+        <ModalWrapper>
+            <ModalHeader>
+                <ModalTitle>Create new project</ModalTitle>
+                <ModalCloseButton onClick={onClose} name='close' />
+            </ModalHeader>
             <div>
-                <Label>project name</Label>
+                <ModalLabel>project name</ModalLabel>
                 <InputField
                     placeholder='project name'
                     value={inputValue.name}
                     onChange={handleOnChange} />
             </div>
-            <Colors>
+            <ModalColors>
                 {colors.map(color => (
-                    <ColorSwatch
+                    <ModalColorSwatch
                         key={color}
                         $color={color}
                         $selected={color === inputValue.color}
                         onClick={() => updateSelectedColor(color)} />
                 ))}
-            </Colors>
-            <Button label='Create new project' onClick={() => console.log('Create new project')} />
-        </Wrapper>
+            </ModalColors>
+            <Button label='Create new project' onClick={() => createProject(inputValue)} />
+        </ModalWrapper>
     )
 }
 

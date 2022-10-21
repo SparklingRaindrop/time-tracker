@@ -1,7 +1,9 @@
 import { useContext } from 'react';
-import { UserDataContext } from '../../../../context/UserDataProvider';
+
+import { UserDataContext } from '../../../context/UserDataProvider';
+import { getStatus } from '../../../JS/dataParser';
+
 import { ListWrapper, ListItemWrapper } from './styled';
-import { getStatus } from '../../../../JS/dataParser';
 
 /*
     color: 'red',

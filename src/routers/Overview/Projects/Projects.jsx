@@ -1,10 +1,13 @@
-import { List, ListItem } from '../../components';
-import { Controller } from '../../blocks';
-import { Modal } from '../../blocks';
-import ModalCreateProject from './ModalCreateProject';
-import { useOutletContext } from 'react-router-dom';
 import { useContext } from 'react';
-import { UserDataContext } from '../../context/UserDataProvider';
+import { useOutletContext } from 'react-router-dom';
+
+import { UserDataContext } from '../../../context/UserDataProvider';
+
+
+import { ModalCreateProject } from '../../../blocks/Projects';
+
+import { Controller, ListItem, Modal } from '../../../components';
+import { ListWrapper } from './styled';
 
 /* 
     {
@@ -28,7 +31,7 @@ export default function Projects() {
 
     return (
         <>
-            <List>
+            <ListWrapper>
                 {
                     projects.map(({ id, name, color }) => {
                         return (
@@ -55,7 +58,7 @@ export default function Projects() {
                         )
                     })
                 }
-            </List>
+            </ListWrapper>
             <Modal isOpen={isOpen} content={<ModalCreateProject onClose={onClose} />} />
         </>
     )

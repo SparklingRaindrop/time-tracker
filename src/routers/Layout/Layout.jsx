@@ -1,9 +1,10 @@
-import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import { ContentWrapper } from './styled';
-import NavBar from './NavBar';
-import TopBar from './TopBar';
 import { useContext, useEffect } from 'react';
+import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+
 import { UserDataContext } from '../../context/UserDataProvider';
+
+import { TopBar, NavBar } from '../../blocks/Layout';
+import { ContentWrapper } from './styled';
 
 export default function Layout() {
     const { pathname } = useLocation();
@@ -18,7 +19,7 @@ export default function Layout() {
         }
         updateProjects(data);
     }, [userId]);
-    console.log(data)
+
     return (
         <ContentWrapper $noTopBar={pathname === '/'}>
             <TopBar />

@@ -1,10 +1,10 @@
 import { useContext, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Controller } from '../../blocks';
-import { Modal } from '../../blocks';
-import { List, ListItem } from '../../components';
-import { UserDataContext } from '../../context/UserDataProvider';
-import ModalCreateTask from './blocks/ModalCreateTask';
+
+import { UserDataContext } from '../../../context/UserDataProvider';
+
+import { ModalCreateTask } from '../../../blocks/Tasks';
+import { Controller, List, ListItem, Modal } from '../../../components';
 
 
 /* 

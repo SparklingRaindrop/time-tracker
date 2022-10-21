@@ -6,6 +6,7 @@ import {
     deleteData,
     patchData,
     postData,
+    fetchProjects,
 } from '../JS/api';
 
 export default function useFetchedData() {
@@ -188,16 +189,22 @@ export default function useFetchedData() {
         const {status} = await patchData(endpoint, data);
         if (status === 200) {
             // check status for fetch?
-            const data = await getProjects(userId);
+            const data = await fetchProjects(userId);
             updateProjects(data);
         }
     }
 
-    async function createProject(data) {
-        const {status} = await postData('/logs', data);
-        if (status === 200) {
+    async function createProject(newData) {
+        const data= {
+            ...newData,
+            user_id: userId,
+            id: uuid4(),
+        };
+
+        const {status} = await postData('/projects', data);
+        if (status === 201) {
             // check status for fetch?
-            const data = await getProjects(userId);
+            const data = await fetchProjects(userId);
             updateProjects(data);
         }
     }

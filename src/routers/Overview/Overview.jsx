@@ -1,9 +1,12 @@
 import { useContext, useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom'
+
 import { UserDataContext } from '../../context/UserDataProvider';
 import useToggleModal from '../../hooks/useToggleModal';
+
+import { Tab } from '../../components';
 import { FloatingButton, TabList, Tabs } from './styled';
-import Tab from './Tab';
+
 
 const TABS = ['projects', 'tasks'];
 

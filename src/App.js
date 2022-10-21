@@ -7,8 +7,8 @@ import Layout from './routers/Layout';
 import Login from './routers/Login/Login';
 import TimeKeeper from './routers/TimeKeeper/TimeKeeper';
 import Overview from './routers/Overview';
-import Tasks from './routers/Tasks';
-import Projects from './routers/Projects';
+import Tasks from './routers/Overview/Tasks';
+import Projects from './routers/Overview/Projects';
 import UserDataProvider from './context/UserDataProvider';
 import { fetchProjects } from './JS/api';
 

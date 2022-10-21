@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Controller } from '../../../../blocks';
-import { UserDataContext } from '../../../../context/UserDataProvider';
+
+import { getStatus } from '../../../JS/dataParser';
+import { UserDataContext } from '../../../context/UserDataProvider';
+
+import { Controller } from '../../../components';
 import { ListWrapper, ListItemWrapper } from './styled';
-import { getStatus } from '../../../../JS/dataParser';
 
 /* 
     {

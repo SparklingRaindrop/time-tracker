@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { List, ListItem } from '../../../../components';
+import { List, ListItem } from '../../../components';
 
 export const ListWrapper = styled(List)`
     position:absolute;

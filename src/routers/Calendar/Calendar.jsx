@@ -1,5 +1,4 @@
-import TimerList from './blocks/TimerList';
-import GridCalendars from './blocks/GridCalendars';
+import { GridCalendars, TimerList } from '../../blocks/Calendars';
 import { Main } from '../../components';
 
 export default function Calendar() {
