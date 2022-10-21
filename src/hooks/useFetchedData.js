@@ -18,12 +18,8 @@ export default function useFetchedData() {
     const [onGoingTimers, setOnGoingTimers] = useState([]);
 
     async function getProjects() {
-        const { status, data } = await fetchData(`/projects?user_id=${userId}`);
-        if (status === 200) {
-            return data;
-        } else {
-            console.log('error');
-        }
+        const response = await fetchData(`/projects?user_id=${userId}`);
+        return response;
     }
 
     async function updateProjects(newProjects) {
@@ -76,6 +72,7 @@ export default function useFetchedData() {
     
     // Getting tasks that are related with projects
     useEffect(() => {
+        if (projects.length === 0) return;
         updateTasks();
     }, [projects]);
 
@@ -126,6 +123,11 @@ export default function useFetchedData() {
         return parentProject.color;
     }
 
+    function getProjectTitleByProjectId(projectId) {
+        const targetProject = projects.find(project => project.id === projectId);
+        return targetProject.name;
+    }
+
     function getLogDataByTaskId(taskId) {
         const result = logs.filter(l => l.task_id === taskId);
         return result.length === 0 ? undefined : result;
@@ -161,6 +163,7 @@ export default function useFetchedData() {
             // TODO check status for fetch?
             updateLogs(tasks);
         }
+        return { status };
     }
     
     async function stopTimer(logId) {
@@ -172,6 +175,7 @@ export default function useFetchedData() {
             // TODO check status for fetch?
             updateLogs(tasks)
         }
+        return { status };
     }
 
     async function removeData(endpoint) {
@@ -183,15 +187,17 @@ export default function useFetchedData() {
         } else {
             console.error('Error in removeData')
         }
+        return { status };
     }
 
     async function editData(endpoint, data) {
         const {status} = await patchData(endpoint, data);
         if (status === 200) {
-            // check status for fetch?
+            // TODO check status for fetch?
             const data = await fetchProjects(userId);
             updateProjects(data);
         }
+        return { status };
     }
 
     async function createProject(newData) {
@@ -203,10 +209,27 @@ export default function useFetchedData() {
 
         const {status} = await postData('/projects', data);
         if (status === 201) {
-            // check status for fetch?
-            const data = await fetchProjects(userId);
+            // TODO check status for fetch?
+            const data = await getProjects(userId);
             updateProjects(data);
         }
+        return { status };
+    }
+
+    async function createTask(projectId, newData) {
+        const data= {
+            ...newData,
+            project_id: projectId,
+            id: uuid4(),
+        };
+
+        const {status} = await postData('/tasks', data);
+        if (status === 201) {
+            // TODO check status for fetch? SHould I fetch projects or just tasks for this project??
+            const data = await getProjects(userId);
+            updateProjects(data);
+        }
+        return { status };
     }
 
     return {
@@ -223,8 +246,10 @@ export default function useFetchedData() {
         getTasksByProjectId,
         getActiveTasksByProjectId,
         getProjectColorByTaskId,
+        getProjectTitleByProjectId,
         getTaskTitleByTaskId,
         createProject,
+        createTask,
         startTimer,
         stopTimer,
         removeData,
