@@ -8,7 +8,15 @@ export const Container = styled.button`
 
     border: 1px solid ${({theme}) => theme.colors.highlight};
     border-radius: 0.2rem;
-    background: none;
+    background: ${({theme, $status}) => {
+        if ($status === 'normal') {
+            return 'transparent'
+        } else if ($status === 'selected') {
+            return theme.colors.highlight;
+        } else if ($status === 'within') {
+            return theme.colors.highlight40;
+        }
+    }};
 
     &:before {
         content: '${({$day}) => $day}';
