@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { ContentWrapper } from './styled';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
@@ -7,18 +7,18 @@ import { UserDataContext } from '../../context/UserDataProvider';
 
 export default function Layout() {
     const { pathname } = useLocation();
-    const { userId, getProjects } = useContext(UserDataContext);
+    const { userId, updateProjects } = useContext(UserDataContext);
     const navigate = useNavigate();
+    const data = useLoaderData();
 
     useEffect(() => {
-
         if (!userId) {
             navigate('/');
             return;
         }
-        getProjects();
+        updateProjects(data);
     }, [userId]);
-
+    console.log(data)
     return (
         <ContentWrapper $noTopBar={pathname === '/'}>
             <TopBar />
