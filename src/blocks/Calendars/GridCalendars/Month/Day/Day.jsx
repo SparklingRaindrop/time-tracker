@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { getDayStatus } from '../../../../../JS/dataParser';
-import { isInRange } from '../../../../../JS/date';
 import { Container } from './styled';
 
 /* 
@@ -19,7 +18,6 @@ export default function Day(props) {
     useEffect(() => {
         // Calender contains 0 as placeholder
         if (day === 0) return;
-        if (!isInRange(dateValue, duration)) return;
         const test = getDayStatus(dateValue, duration);
         setStatus(test);
     }, [duration]);

@@ -1,25 +1,15 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import { GridCalendars, TimerList } from '../../blocks/Calendars';
 import { Main } from '../../components';
-import { compareDates, generateInitialDurationDate } from '../../JS/date';
-
+import { generateInitialDurationDate } from '../../JS/date';
+import { durationReducer } from '../../JS/calendar';
 
 export default function Calendar() {
-    const [duration, setDuration] = useState([generateInitialDurationDate()]);
-
-    function updateDuration(newDate) {
-        setDuration(prev => {
-            const newDuration = [...prev, newDate];
-            newDuration.sort(compareDates);
-            if (newDuration.length < 3) return newDuration;
-            // When the old duration is selected reset on the third day clicked.
-            return [newDate];
-        });
-    }
-
+    const [duration, dispatch] = useReducer(durationReducer, [generateInitialDurationDate()])
+    console.log(duration)
     return (
         <Main>
-            <GridCalendars updateDuration={updateDuration} duration={duration} />
+            <GridCalendars dispatch={dispatch} duration={duration} />
             <TimerList duration={duration} />
         </Main>
     )
