@@ -8,6 +8,7 @@ import {
     postData,
     fetchProjects,
 } from '../JS/api';
+import { filterDateByDuration } from '../JS/date';
 
 export default function useFetchedData() {
     //const [userId, setUserId] = useState(null); DO NOT DELETE
@@ -151,6 +152,10 @@ export default function useFetchedData() {
         return targetLogs.filter(log => log.isActive);
     }
 
+    function filterLogsByDuration(duration) {
+        return filterDateByDuration(duration, logs);
+    }
+
     async function startTimer(taskId) {
         const data = {
             task_id: taskId,
@@ -158,7 +163,7 @@ export default function useFetchedData() {
             end: null,
             id: uuid4()
         };
-        const {status} = await postData(`/logs/${taskId}`, data);
+        const {status} = await postData(`/logs`, data);
         if (status === 201) {
             // TODO check status for fetch?
             updateLogs(tasks);
@@ -248,6 +253,7 @@ export default function useFetchedData() {
         getProjectColorByTaskId,
         getProjectTitleByProjectId,
         getTaskTitleByTaskId,
+        filterLogsByDuration,
         createProject,
         createTask,
         startTimer,
