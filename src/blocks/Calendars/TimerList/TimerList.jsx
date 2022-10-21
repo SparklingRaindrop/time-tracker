@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import { UserDataContext } from '../../../context/UserDataProvider';
 import { getStatus } from '../../../JS/dataParser';
@@ -12,14 +13,20 @@ import { ListWrapper, ListItemWrapper } from './styled';
     end: Date
     log: true
  */
-export default function TimerList() {
-    const { logs, getProjectColorByTaskId, getTaskTitleByTaskId } = useContext(UserDataContext);
+export default function TimerList(props) {
+    const { duration } = props;
+    const {
+        logs,
+        getProjectColorByTaskId,
+        getTaskTitleByTaskId,
+        filterLogsByDuration,
+    } = useContext(UserDataContext);
 
     if (logs.length === 0) return;
     return (
         <ListWrapper filled>
             {
-                logs.map(({ id, start, end, isActive, task_id }) => (
+                filterLogsByDuration(duration).map(({ id, start, end, isActive, task_id }) => (
                     <ListItemWrapper
                         key={id}
                         values={{
@@ -36,3 +43,7 @@ export default function TimerList() {
         </ListWrapper>
     )
 }
+
+TimerList.propTypes = {
+    duration: PropTypes.array,
+};
