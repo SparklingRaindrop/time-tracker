@@ -10,14 +10,16 @@ export function getStatus(isActive, end) {
 
 export function getDayStatus(date, duration) {
     const convertedDate = Number(date);
-        const convertedDuration = duration.map(Number);
-        if (convertedDuration.includes(convertedDate)) {
-            return 'selected';
-        } else if (
-            convertedDuration[0] < convertedDate &&
-            convertedDate < convertedDuration[1]
-        ) {
-            return 'within'
-        }
-        return 'normal';
+    if(!convertedDate) return;
+
+    const convertedDuration = duration.map(Number);
+    if (convertedDuration.includes(convertedDate)) {
+        return 'selected';
+    } else if (
+        convertedDuration[0] < convertedDate &&
+        convertedDate < convertedDuration[1]
+    ) {
+        return 'within'
+    }
+    return 'normal';
 }
