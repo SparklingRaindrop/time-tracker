@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { getDayStatus } from '../../../../../JS/dataParser';
+import { isInRange } from '../../../../../JS/date';
 import { Container } from './styled';
 
 /* 
@@ -10,15 +11,30 @@ import { Container } from './styled';
         within
 */
 export default function Day(props) {
-    const { day, updateDuration, year, month, duration } = props;
-    const status = useMemo(() => getDayStatus(new Date(`${month} ${day} ${year}`), duration), [duration]);
+    const { day, dispatch, year, month, duration } = props;
+    const dateValue = new Date(`${month} ${day} ${year}`);
+    //const status = useMemo(() => getDayStatus(new Date(`${month} ${day} ${year}`), duration), [duration]);
+    const [status, setStatus] = useState(getDayStatus(dateValue, duration));
+
+    useEffect(() => {
+        // Calender contains 0 as placeholder
+        if (day === 0) return;
+        if (!isInRange(dateValue, duration)) return;
+        const test = getDayStatus(dateValue, duration);
+        setStatus(test);
+    }, [duration]);
 
     function handleOnClick() {
-        // Empty spots has 0 as placeholder
-        if (!day) return;
-        updateDuration(new Date(`${month} ${day} ${year}`));
+        if (day === 0) return;
+        dispatch({
+            type: 'date',
+            value: new Date(`${month} ${day} ${year}`)
+        });
     }
-
+    if (day === 18) {
+        console.log('status:', status, dateValue)
+        console.log(duration)
+    }
     return (
         <Container
             $day={!day ? '' : day}
@@ -31,6 +47,6 @@ Day.propTypes = {
     year: PropTypes.string.isRequired,
     month: PropTypes.string.isRequired,
     day: PropTypes.number.isRequired,
-    updateDuration: PropTypes.func,
+    dispatch: PropTypes.func,
     duration: PropTypes.array,
 };

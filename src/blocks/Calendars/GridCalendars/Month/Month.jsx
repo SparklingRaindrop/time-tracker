@@ -3,7 +3,7 @@ import Day from './Day';
 import { Wrapper, DayOfWeek } from './styled';
 
 export default function Month(props) {
-    const { value, updateDuration, year, duration } = props;
+    const { value, dispatch, year, duration } = props;
 
     if (!value) return;
     return (
@@ -21,7 +21,7 @@ export default function Month(props) {
                                 day={day}
                                 year={year}
                                 month={value.month}
-                                updateDuration={updateDuration}
+                                dispatch={dispatch}
                                 duration={duration} />
                         ))
                     ))
@@ -34,6 +34,6 @@ export default function Month(props) {
 Month.propTypes = {
     value: PropTypes.object.isRequired,
     year: PropTypes.string.isRequired,
-    updateDuration: PropTypes.func,
+    dispatch: PropTypes.func,
     duration: PropTypes.array,
 };

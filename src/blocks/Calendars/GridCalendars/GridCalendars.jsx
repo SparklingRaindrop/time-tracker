@@ -3,33 +3,37 @@ import PropTypes from 'prop-types';
 import useCalendar from '../../../hooks/useCalendar';
 import Month from './Month';
 
-import { OuterWrapper } from './styled';
+import { OuterWrapper, CalenderWrapper } from './styled';
+import TimeRangePicker from './TimeRangePicker';
 
 
 export default function GridCalendars(props) {
-    const { updateDuration, duration } = props;
+    const { dispatch, duration } = props;
     const { calendar, /* addCalendar */ } = useCalendar();
 
     return (
         <OuterWrapper>
-            {
-                calendar.map(data => {
-                    const { month, year } = data;
-                    return (
-                        <Month
-                            key={month + year}
-                            value={data}
-                            year={year}
-                            updateDuration={updateDuration}
-                            duration={duration} />
-                    )
-                })
-            }
+            <CalenderWrapper>
+                {
+                    calendar.map(data => {
+                        const { month, year } = data;
+                        return (
+                            <Month
+                                key={month + year}
+                                value={data}
+                                year={year}
+                                dispatch={dispatch}
+                                duration={duration} />
+                        )
+                    })
+                }
+            </CalenderWrapper>
+            <TimeRangePicker dispatch={dispatch} duration={duration} />
         </OuterWrapper>
     )
 }
 
 GridCalendars.propTypes = {
-    updateDuration: PropTypes.func,
+    dispatch: PropTypes.func,
     duration: PropTypes.array,
 };
