@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { GridCalendars, TimerList } from '../../blocks/Calendars';
 import { Main } from '../../components';
-import { compareDates } from '../../JS/date';
+import { compareDates, generateInitialDurationDate } from '../../JS/date';
 
 
 export default function Calendar() {
-    const [duration, setDuration] = useState([new Date()]);
+    const [duration, setDuration] = useState([generateInitialDurationDate()]);
 
     function updateDuration(newDate) {
         setDuration(prev => {
