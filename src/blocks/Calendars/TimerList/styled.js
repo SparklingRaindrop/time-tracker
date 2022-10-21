@@ -3,6 +3,8 @@ import { ListItem, List } from '../../../components';
 
 
 export const ListWrapper = styled(List)`
+    // Upper half is 60%
+    height: 40%;
     position:absolute;
     bottom: 0;
     top: 60%;
