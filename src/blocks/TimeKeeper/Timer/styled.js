@@ -3,8 +3,8 @@ import { Stopwatch } from '../../../components';
 
 export const Wrapper = styled.div`
     width: 100%;
-    // OverlayListVIew is top: 60%;
-    height: 60%;
+    // height 70% for lower half
+    height: 30%;
     
     display: grid;
     align-items: center;
