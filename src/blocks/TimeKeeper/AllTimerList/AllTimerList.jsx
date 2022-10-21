@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { getStatus } from '../../../JS/dataParser';
 import { UserDataContext } from '../../../context/UserDataProvider';
 
 import { Controller } from '../../../components';
@@ -17,34 +16,15 @@ import { ListWrapper, ListItemWrapper } from './styled';
     }
 */
 
-
 export default function AllTimerList(props) {
     const { changeCurrentLogId, currentShownLogId } = props;
     const {
         tasks,
         getProjectColorByTaskId,
         stopTimer,
-        removeData,
         logs,
         getTaskTitleByTaskId
     } = useContext(UserDataContext);
-
-    function createButtonValues(isActive, logId) {
-        const result = [];
-
-        if (isActive) {
-            result.push({
-                name: 'stop',
-                onClick: () => stopTimer(logId)
-            });
-        } else if (!isActive) {
-            result.push({
-                name: 'remove',
-                onClick: () => removeData(`logs/${logId}`, logId)
-            });
-        }
-        return result;
-    }
 
     if (tasks.length === 0) return;
     // TODO Do something for if there is no timer to show
@@ -52,7 +32,7 @@ export default function AllTimerList(props) {
         <ListWrapper filled>
             {
                 logs.map(({ id, start, end, isActive, task_id }) => {
-                    if (!isActive && end) return;
+                    if (!isActive) return;
                     return (
                         <ListItemWrapper
                             key={id}
@@ -64,11 +44,13 @@ export default function AllTimerList(props) {
                                 log: true,
                                 start: start,
                                 end: end,
-                                status: getStatus(isActive, end)
                             }}
                             extra={
                                 <Controller
-                                    buttons={createButtonValues(isActive, id)}
+                                    buttons={[{
+                                        name: 'stop',
+                                        onClick: () => stopTimer(id)
+                                    }]}
                                     disabled={id !== currentShownLogId} />
                             }
                             onClick={() => changeCurrentLogId(id)} />
