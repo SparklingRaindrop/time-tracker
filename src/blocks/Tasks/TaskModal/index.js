@@ -1,2 +1,2 @@
 import TaskModal from './TaskModal';
-export { TaskModal };
+export default TaskModal;
