@@ -24,7 +24,7 @@ export default function TimeRangePicker(props) {
     return (
         <Wrapper>
             <div>
-                <label htmlFor='start'>Start: </label>
+                <label htmlFor='start'>From: </label>
                 <input
                     id='start'
                     type='time'
@@ -35,7 +35,7 @@ export default function TimeRangePicker(props) {
                     onChange={handleOnChange} />
             </div>
             <div>
-                <label htmlFor='end'>End: </label>
+                <label htmlFor='end'>Until: </label>
                 <input
                     id='end'
                     type='time'
