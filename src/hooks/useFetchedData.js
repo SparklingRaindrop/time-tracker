@@ -8,7 +8,7 @@ import {
     postData,
     fetchProjects,
 } from '../JS/api';
-import { filterDateByDuration } from '../JS/date';
+import { filterLogDataByDuration } from '../JS/date';
 
 export default function useFetchedData() {
     //const [userId, setUserId] = useState(null); DO NOT DELETE
@@ -153,7 +153,7 @@ export default function useFetchedData() {
     }
 
     function filterLogsByDuration(duration) {
-        return filterDateByDuration(duration, logs);
+        return filterLogDataByDuration(duration, logs);
     }
 
     async function startTimer(taskId) {
