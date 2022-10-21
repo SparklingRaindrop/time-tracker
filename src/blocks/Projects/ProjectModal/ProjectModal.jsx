@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
 
 import { UserDataContext } from '../../../context/UserDataProvider';
@@ -13,19 +12,27 @@ import {
     ModalCloseButton,
     ModalHeader,
 } from '../../../components';
+import { useOutletContext } from 'react-router-dom';
 
 const colors = [
     '#FF80ED', '#00FFFF', '#FF7373', '#FFD700', '#008080',
     '#BADA55', '#66CDAA', '#FAEBD7', '#C6E2FF', '#8A2BE2'
 ];
 
-export default function ModalCreateProject(props) {
-    const { onClose } = props;
-    const [inputValue, setInputValue] = useState({
-        name: '',
-        color: colors[0]
-    });
-    const { createProject } = useContext(UserDataContext);
+const initValue = {
+    name: '',
+    color: colors[0]
+};
+
+export default function ProjectModal() {
+    const { onClose, data } = useOutletContext();
+    const [inputValue, setInputValue] = useState(
+        data ? {
+            name: data.name,
+            color: data.color
+        } : initValue
+    );
+    const { createProject, editData } = useContext(UserDataContext);
 
     function handleOnChange(event) {
         setInputValue(prev => ({
@@ -41,10 +48,27 @@ export default function ModalCreateProject(props) {
         }))
     }
 
+    async function handleOnClick() {
+        let status;
+        if (data) {
+            const response = await editData(`/projects/${data.id}`, inputValue);
+            status = response.status;
+        } else {
+            const response = await createProject(inputValue);
+            status = response.status;
+        }
+        if (status === 201 || status === 200) {
+            setInputValue({
+                name: '',
+                color: colors[0]
+            });
+        }
+    }
+
     return (
         <ModalWrapper>
             <ModalHeader>
-                <ModalTitle>Create new project</ModalTitle>
+                <ModalTitle>{data ? 'Edit' : 'Create'} new project</ModalTitle>
                 <ModalCloseButton onClick={onClose} name='close' />
             </ModalHeader>
             <div>
@@ -52,7 +76,8 @@ export default function ModalCreateProject(props) {
                 <InputField
                     placeholder='project name'
                     value={inputValue.name}
-                    onChange={handleOnChange} />
+                    onChange={handleOnChange}
+                    autoFocus />
             </div>
             <ModalColors>
                 {colors.map(color => (
@@ -63,11 +88,7 @@ export default function ModalCreateProject(props) {
                         onClick={() => updateSelectedColor(color)} />
                 ))}
             </ModalColors>
-            <Button label='Create new project' onClick={() => createProject(inputValue)} />
+            <Button label={data ? 'Update project' : 'Create new project'} onClick={handleOnClick} />
         </ModalWrapper>
     )
-}
-
-ModalCreateProject.propTypes = {
-    onClose: PropTypes.func.isRequired,
 }
