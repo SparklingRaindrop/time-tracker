@@ -10,6 +10,7 @@ import Overview from './routers/Overview';
 import Tasks from './routers/Tasks';
 import Projects from './routers/Projects';
 import UserDataProvider from './context/UserDataProvider';
+import { fetchProjects } from './JS/api';
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
     {
         path: ':id',
         element: <Layout />,
+        loader: async({params}) => fetchProjects(params.id),
         children: [
             {
                 index: true,
@@ -61,3 +63,13 @@ function App() {
 }
 
 export default App;
+
+
+// Add Project -> need api function
+// Add task
+// Edit Task
+// Edit Project
+// Fix on going total on projects
+// allow date range for timers
+
+// Check icon Button's icon color
