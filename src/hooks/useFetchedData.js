@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
+import uuid4 from 'uuid4';
 import {
     fetchUserId,
-    fetchProjects,
-    fetchTasks,
-    fetchLogs,
-    postStartDate,
-    patchEndDate,
+    fetchData,
     deleteData,
     patchData,
+    postData,
 } from '../JS/api';
 
 export default function useFetchedData() {
@@ -18,18 +16,28 @@ export default function useFetchedData() {
     const [logs, setLogs] = useState([]);
     const [onGoingTimers, setOnGoingTimers] = useState([]);
 
-    async function getTasks(projectIs) {
-        const { status, data } = await fetchTasks(projectIs);
+    async function getProjects() {
+        const { status, data } = await fetchData(`/projects?user_id=${userId}`);
         if (status === 200) {
             return data;
         } else {
             console.log('error');
         }
     }
-    async function getProjects() {
-        const { status, data } = await fetchProjects(userId);
+
+    async function updateProjects(newProjects) {
+        const { status, data } = newProjects;
         if (status === 200) {
             setProjects(data);
+        }
+    }
+    
+    async function getTasks(projectId) {
+        const { status, data } = await fetchData(`/tasks?project_id=${projectId}`);
+        if (status === 200) {
+            return data;
+        } else {
+            console.log('error');
         }
     }
 
@@ -41,7 +49,7 @@ export default function useFetchedData() {
     }
 
     async function getLogs(taskId) {
-        const { status, data } = await fetchLogs(taskId);
+        const { status, data } = await fetchData(`/logs?task_id=${taskId}`);
         if (status === 200) {
             return data;
         } else {
@@ -141,7 +149,13 @@ export default function useFetchedData() {
     }
 
     async function startTimer(taskId) {
-        const {status} = await postStartDate(taskId);
+        const data = {
+            task_id: taskId,
+            start: new Date().toString(),
+            end: null,
+            id: uuid4()
+        };
+        const {status} = await postData(`/logs/${taskId}`, data);
         if (status === 201) {
             // TODO check status for fetch?
             updateLogs(tasks);
@@ -149,7 +163,10 @@ export default function useFetchedData() {
     }
     
     async function stopTimer(logId) {
-        const {status} = await patchEndDate(logId);
+        const data = {
+            end: new Date().toString()
+        };
+        const {status} = await patchData(`/logs/${logId}`, data);
         if (status === 200) {
             // TODO check status for fetch?
             updateLogs(tasks)
@@ -160,7 +177,8 @@ export default function useFetchedData() {
         const {status} = await deleteData(endpoint);
         if (status === 200) {
             // TODO check status for fetch?
-            getProjects();
+            const data = await getProjects(userId);
+            updateProjects(data);
         } else {
             console.error('Error in removeData')
         }
@@ -170,7 +188,17 @@ export default function useFetchedData() {
         const {status} = await patchData(endpoint, data);
         if (status === 200) {
             // check status for fetch?
-            getProjects();
+            const data = await getProjects(userId);
+            updateProjects(data);
+        }
+    }
+
+    async function createProject(data) {
+        const {status} = await postData('/logs', data);
+        if (status === 200) {
+            // check status for fetch?
+            const data = await getProjects(userId);
+            updateProjects(data);
         }
     }
 
@@ -181,6 +209,7 @@ export default function useFetchedData() {
         logs,
         //setUserId, DO NOT DELETE
         getProjects,
+        updateProjects,
         fetchUserId,
         getLogDataByLogId,
         getLogDataByTaskId,
@@ -188,6 +217,7 @@ export default function useFetchedData() {
         getActiveTasksByProjectId,
         getProjectColorByTaskId,
         getTaskTitleByTaskId,
+        createProject,
         startTimer,
         stopTimer,
         removeData,
