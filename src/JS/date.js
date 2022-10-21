@@ -29,14 +29,6 @@ export function filterLogDataByDuration(duration, logArray) {
 // Be careful with what Date instance have
 // it contains time nad if you don't care the time range you have to deal with that
 
-export function isInRange(target, rangeArray) {
-    const targetDate = new Date(target);
-    const startDate = new Date(rangeArray[0]);
-    const endDate = rangeArray[1] || new Date(rangeArray[1]);
-    // Filter out logs whose start or end date is within duration
-    return startDate <= targetDate && targetDate <= endDate;
-}
-
 export function isValid(date) {
     return date instanceof Date && !isNaN(date);
 }
