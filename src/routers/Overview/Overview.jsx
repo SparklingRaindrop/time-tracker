@@ -19,7 +19,7 @@ export default function Overview() {
         const pathNames = pathname.split('/');
         return pathNames[pathNames.length - 1];
     }, [location]);
-    const { isOpen, onClose, onOpen } = useToggleModal();
+    const { isOpen, onClose, onOpen, data } = useToggleModal();
 
     function updateCurrentProjectId(newId) {
         setCurrentProjectId(newId)
@@ -39,8 +39,8 @@ export default function Overview() {
                     ))
                 }
             </TabList>
-            <Outlet context={{ isOpen, onClose, currentProjectId, updateCurrentProjectId }} />
-            <FloatingButton name='add' onClick={onOpen} />
+            <Outlet context={{ isOpen, onClose, onOpen, currentProjectId, updateCurrentProjectId, data }} />
+            <FloatingButton name='add' onClick={() => onOpen()} />
         </Tabs>
     )
 }
