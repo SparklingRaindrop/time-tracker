@@ -2,21 +2,16 @@ export function compareDates(a, b) {
     return new Date(a) - new Date(b);
 }
 
-/* export function truncate(dateArray, newDate) {
-    const result = [...dateArray];
-    const position = dateArray.map(Number).indexOf(Number(newDate));
-    if (position === 0 || position === 2) {
-        // (newDate) (old) (old) => Delete the second value
-        // (old) (old) (newDate) => Delete the last value
-        result.splice(1, 1);
-    } else if (position === 1) {
-        // (old) (newDate) (old) => Delete the first value
-        result.splice(0, 1);
-    }
-    return result;
-} */
+export function generateInitialDurationDate() {
+    const today = new Date();
+    // I have to reset the time to get the initial day to be selected
+    // Because Day component doesn't have time value
+    // so it will be considered different when it's compared
+    today.setHours(0, 0, 0, 0);
+    return today;
+}
 
-export function filterDateByDuration(duration, logArray) {
+export function filterLogDataByDuration(duration, logArray) {
     if (!logArray.length) return [];
 
     const startDate = new Date(duration[0]);
@@ -26,7 +21,22 @@ export function filterDateByDuration(duration, logArray) {
         const firstDate = new Date(start);
         const secondDate = new Date(end);
 
-        return (startDate < firstDate && firstDate < endDate) ||
-        (startDate < secondDate && secondDate < endDate)
+        return (startDate <= firstDate && firstDate <= endDate) ||
+        (startDate <= secondDate && secondDate <= endDate)
     });
+}
+// TODO Things need to be adjusted later
+// Be careful with what Date instance have
+// it contains time nad if you don't care the time range you have to deal with that
+
+export function isInRange(target, rangeArray) {
+    const targetDate = new Date(target);
+    const startDate = new Date(rangeArray[0]);
+    const endDate = rangeArray[1] || new Date(rangeArray[1]);
+    // Filter out logs whose start or end date is within duration
+    return startDate <= targetDate && targetDate <= endDate;
+}
+
+export function isValid(date) {
+    return date instanceof Date && !isNaN(date);
 }
