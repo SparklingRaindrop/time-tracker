@@ -15,6 +15,7 @@ const colors = {
     black10: '#06231f19',
     grey: '#7D8079',
     highlight: '#93ECB2',
+    highlight40: '#94edb366',
 }
 const theme = {
     colors,
