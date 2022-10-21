@@ -2,12 +2,17 @@ import styled from 'styled-components';
 import { IconButton } from '../../components';
 
 export const ControllerButton = styled(IconButton)`
-    width: 2rem;
+    width: 100%;
+    
+    & svg {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0.2rem;
+    }
 `;
 
 export const Wrapper = styled.div`
-    max-width: 40%;
-    padding: 0.5rem;
+    max-width: 30%;
 
     display: flex;
     flex-direction: row;
