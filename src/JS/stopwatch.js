@@ -23,10 +23,3 @@ export function getDuration(start, end) {
     
     return {hours, minutes, seconds}
 }
-
-export function getDoubleDigit(number) {
-    return number.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-    })
-}
