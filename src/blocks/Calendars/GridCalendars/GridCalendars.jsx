@@ -10,7 +10,7 @@ import TimeRangePicker from './TimeRangePicker';
 export default function GridCalendars(props) {
     const { dispatch, duration } = props;
     const { calendar, /* addCalendar */ } = useCalendar();
-
+    console.log(duration);
     return (
         <OuterWrapper>
             <CalenderWrapper>

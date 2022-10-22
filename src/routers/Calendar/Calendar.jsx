@@ -1,12 +1,11 @@
 import { useReducer } from 'react';
 import { GridCalendars, TimerList } from '../../blocks/Calendars';
 import { Main } from '../../components';
-import { generateInitialDurationDate } from '../../JS/date';
-import { durationReducer } from '../../JS/calendar';
+import { durationReducer, generateInitialDurationDate } from '../../JS/calendar';
 
 export default function Calendar() {
-    const [duration, dispatch] = useReducer(durationReducer, [generateInitialDurationDate()])
-    console.log(duration)
+    const [duration, dispatch] = useReducer(durationReducer, generateInitialDurationDate())
+
     return (
         <Main>
             <GridCalendars dispatch={dispatch} duration={duration} />

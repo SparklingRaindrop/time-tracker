@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { getDoubleDigit, getDuration } from '../../JS/stopwatch';
+import { getDuration } from '../../JS/stopwatch';
+import { getDoubleDigit } from '../../JS/dataParser';
 
 export default function Stopwatch(props) {
     const { start, end, className } = props;

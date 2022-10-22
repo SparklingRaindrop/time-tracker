@@ -21,7 +21,7 @@ export default function TimerList(props) {
         getTaskTitleByTaskId,
         filterLogsByDuration,
     } = useContext(UserDataContext);
-    console.log(filterLogsByDuration(duration));
+
     if (logs.length === 0) return;
     return (
         <ListWrapper filled>
