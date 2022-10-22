@@ -2,15 +2,6 @@ export function compareDates(a, b) {
     return new Date(a) - new Date(b);
 }
 
-export function generateInitialDurationDate() {
-    const today = new Date();
-    // I have to reset the time to get the initial day to be selected
-    // Because Day component doesn't have time value
-    // so it will be considered different when it's compared
-    today.setHours(0, 0, 0, 0);
-    return today;
-}
-
 export function filterLogDataByDuration(duration, logArray) {
     if (!logArray.length) return [];
     const startDate = new Date(duration[0]);
