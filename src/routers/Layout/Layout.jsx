@@ -4,7 +4,7 @@ import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-do
 import { UserDataContext } from '../../context/UserDataProvider';
 
 import { TopBar, NavBar } from '../../blocks/Layout';
-import { ContentWrapper } from './styled';
+import { ContentWrapper, Wrapper } from './styled';
 
 export default function Layout() {
     const { pathname } = useLocation();
@@ -21,10 +21,12 @@ export default function Layout() {
     }, [userId]);
 
     return (
-        <ContentWrapper $noTopBar={pathname === '/'}>
-            <TopBar />
-            <Outlet />
+        <Wrapper>
+            <ContentWrapper $noTopBar={pathname === '/'}>
+                <TopBar />
+                <Outlet />
+            </ContentWrapper>
             <NavBar />
-        </ContentWrapper>
+        </Wrapper>
     )
 }
