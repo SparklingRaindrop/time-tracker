@@ -26,7 +26,7 @@ export default function Day(props) {
         if (day === 0) return;
         dispatch({
             type: 'date',
-            value: new Date(`${month} ${day} ${year}`)
+            value: dateValue
         });
     }
 
