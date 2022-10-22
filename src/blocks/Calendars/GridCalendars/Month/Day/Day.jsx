@@ -29,10 +29,7 @@ export default function Day(props) {
             value: new Date(`${month} ${day} ${year}`)
         });
     }
-    if (day === 18) {
-        console.log('status:', status, dateValue)
-        console.log(duration)
-    }
+
     return (
         <Container
             $day={!day ? '' : day}
