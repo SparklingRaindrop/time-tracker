@@ -3,9 +3,8 @@ import { useOutletContext } from 'react-router-dom';
 
 import { UserDataContext } from '../../../context/UserDataProvider';
 
-
-import { Controller, ListItem, Modal } from '../../../components';
-import { ListWrapper } from './styled';
+import { Controller, List, ListItem, Modal } from '../../../components';
+import { ContentWrapper } from './styled';
 import { ProjectModal } from '../../../blocks/Projects';
 
 /* 
@@ -28,8 +27,8 @@ export default function Projects() {
     } = useContext(UserDataContext);
 
     return (
-        <>
-            <ListWrapper>
+        <ContentWrapper>
+            <List>
                 {
                     projects.map(project => {
                         const { id, name, color } = project;
@@ -57,8 +56,8 @@ export default function Projects() {
                         )
                     })
                 }
-            </ListWrapper>
+            </List>
             <Modal isOpen={isOpen} content={<ProjectModal />} />
-        </>
+        </ContentWrapper>
     )
 }
