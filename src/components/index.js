@@ -1,6 +1,6 @@
 import Icon from './Icon';
 import { GlobalStyles } from './GlobalStyles';
-import Nav from './Nav';
+import {Nav, NavRef} from './Nav';
 import Main from './Main';
 import Wrapper from './Wrapper';
 import {List, ListItem} from './ListView';
@@ -26,6 +26,7 @@ export {
     Icon,
     GlobalStyles,
     Nav,
+    NavRef,
     Main,
     Wrapper,
     List,
