@@ -3,7 +3,6 @@ import Wrapper from '../../Wrapper';
 
 export const Container = styled(Wrapper)`
     background: ${({theme, $filled}) => $filled && theme.colors.white};
-    overflow-y: scroll;
 `;
 
 export const ListWrapper = styled.ul`
