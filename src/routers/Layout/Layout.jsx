@@ -1,14 +1,15 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
 import { UserDataContext } from '../../context/UserDataProvider';
 
-import { TopBar, NavBar } from '../../blocks/Layout';
+import { TopBar, Navbar } from '../../blocks/Layout';
 import { ContentWrapper, Wrapper } from './styled';
 
 export default function Layout() {
     const { pathname } = useLocation();
     const { userId, updateProjects } = useContext(UserDataContext);
+    const navRef = useRef(null);
     const navigate = useNavigate();
     const data = useLoaderData();
 
@@ -22,11 +23,11 @@ export default function Layout() {
 
     return (
         <Wrapper>
-            <ContentWrapper $noTopBar={pathname === '/'}>
+            <ContentWrapper $noTopBar={pathname === '/'} $navbarHeight={navRef.current && navRef.current.clientHeight}>
                 <TopBar />
                 <Outlet />
             </ContentWrapper>
-            <NavBar />
+            <Navbar ref={navRef} />
         </Wrapper>
     )
 }

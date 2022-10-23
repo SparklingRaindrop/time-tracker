@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import NavButton from './NavButton';
 import { Wrapper } from './styled';
 
@@ -15,12 +16,14 @@ const navLinks = [{
     title: 'Overview'
 }];
 
-export default function NavBar() {
+export const Navbar = forwardRef((_, ref) => {
     return (
-        <Wrapper>
+        <Wrapper ref={ref}>
             {
                 navLinks.map(link => <NavButton key={link.title} {...link} />)
             }
         </Wrapper>
     )
-}
+});
+
+Navbar.displayName = 'Navbar';
