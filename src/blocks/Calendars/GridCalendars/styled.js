@@ -13,4 +13,10 @@ export const OuterWrapper = styled.div`
 
 export const CalenderWrapper = styled(Wrapper)`
     overflow-y: auto;
+    padding: 0 1rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: ${({theme}) => theme.spacing.md};
 `;

@@ -1,45 +1,33 @@
 import calendar from 'calendar-js';
-import {useState } from 'react';
+import {useState} from 'react';
 
 // https://github.com/igor-ribeiro/calendar-js#readme
 
 
-function getCalendar(year, monthIndex) {
-    return calendar().of(year, monthIndex);
+function getCalendar(year) {
+    const result = [];
+    [...Array(12).keys()].forEach(month => result.push(calendar().of(year, month)));
+    return  result;
 }
 
 function init() {
     const today = new Date();
     const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth();
 
     // Pushing to the array here
     // to make sure that the order of the months is correct
-    const initial = [];
-    initial.push(getCalendar(currentYear, currentMonth - 1));
-    initial.push(getCalendar(currentYear, currentMonth));
-    initial.push(getCalendar(currentYear, currentMonth + 1));
-    return initial;
+    
+    return getCalendar(currentYear);
 }
 
 export default function useCalendar() {
-    const [calendar, setCalendar] = useState(init());
+    const [calendarData, setCalendarData] = useState(init());
 
-    function addCalendar(year, monthIndex) {
-        const months = calendar.months();
-
-        setCalendar(prev => {
-            const newCalendar = [...prev];
-            
-            const newMonth = getCalendar(year, monthIndex);
-            if (months.indexOf(newCalendar[0].month) < months.indexOf(newMonth.month)) {
-                newCalendar.push();
-            } else if (months.indexOf(newCalendar[0].month) > months.indexOf(newMonth.month)) {
-                newCalendar.unshift();
-            }
-            return newCalendar;
-        })
+    function addCalendar(direction) {
+        const targetYear = Number(calendarData[direction < 0 ? 0 : calendarData.length - 1].year) + direction;
+        const newCalender = getCalendar(targetYear);
+        setCalendarData(prev => direction < 0 ? [...newCalender, ...prev] : [...prev, ...newCalender]);
     }
 
-    return {calendar, addCalendar};
+    return {calendar: calendarData, addCalendar};
 }

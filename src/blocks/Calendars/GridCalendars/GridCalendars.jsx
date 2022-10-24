@@ -1,19 +1,21 @@
 import PropTypes from 'prop-types';
 
 import useCalendar from '../../../hooks/useCalendar';
-import Month from './Month';
 
-import { OuterWrapper, CalenderWrapper } from './styled';
+import Month from './Month';
 import TimeRangePicker from './TimeRangePicker';
+import { OuterWrapper, CalenderWrapper } from './styled';
+import { Button } from '../../../components';
 
 
 export default function GridCalendars(props) {
     const { dispatch, duration } = props;
-    const { calendar, /* addCalendar */ } = useCalendar();
-    console.log(duration);
+    const { calendar, addCalendar } = useCalendar();
+
     return (
         <OuterWrapper>
             <CalenderWrapper>
+                <Button label='Show Previous Year' onClick={() => addCalendar(-1)} />
                 {
                     calendar.map(data => {
                         const { month, year } = data;
@@ -27,6 +29,7 @@ export default function GridCalendars(props) {
                         )
                     })
                 }
+                <Button label='Show Next Year' onClick={() => addCalendar(1)} />
             </CalenderWrapper>
             <TimeRangePicker dispatch={dispatch} duration={duration} />
         </OuterWrapper>
