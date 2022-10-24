@@ -29,7 +29,7 @@ export default function AllTimerList(props) {
     if (tasks.length === 0) return;
     // TODO Do something for if there is no timer to show
     return (
-        <ListWrapper filled>
+        <ListWrapper filled round>
             {
                 logs.map(({ id, start, end, isActive, task_id }) => {
                     if (!isActive) return;

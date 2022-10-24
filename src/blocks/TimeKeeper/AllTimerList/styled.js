@@ -6,8 +6,8 @@ export const ListWrapper = styled(List)`
     position:absolute;
     bottom: 0;
     top: 30%;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
+    
+    overflow-y: auto;
 `;
 
 export const ListItemWrapper = styled(ListItem)`

@@ -12,7 +12,8 @@ import { ListWrapper, ListItemWrapper } from './styled';
     start: Date
     end: Date
     log: true
- */
+*/
+
 export default function TimerList(props) {
     const { duration } = props;
     const {
@@ -24,7 +25,7 @@ export default function TimerList(props) {
 
     if (logs.length === 0) return;
     return (
-        <ListWrapper filled>
+        <ListWrapper filled round>
             {
                 filterLogsByDuration(duration).map(({ id, start, end, isActive, task_id }) => (
                     <ListItemWrapper
