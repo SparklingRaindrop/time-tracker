@@ -13,7 +13,8 @@ const colors = {
     white: '#ffffff',
     black: '#06231f',
     black10: '#06231f19',
-    grey: '#7D8079',
+    grey: '#7d8079',
+    grey20: '#7d807933',
     highlight: '#93ECB2',
     highlight40: '#94edb366',
 }
