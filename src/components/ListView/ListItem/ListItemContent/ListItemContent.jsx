@@ -4,10 +4,10 @@ import Stopwatch from '../../../Stopwatch/Stopwatch';
 import { ColorMarker, Wrapper, Title, Log, Status } from './styled';
 
 export default function ListItemContent(props) {
-    const { color, title, log, start, end, onGoingTotal, taskTotal, status } = props;
+    const { color, title, log, start, end, onGoingTotal, taskTotal, status, handleOnClick } = props;
 
     return (
-        <Wrapper>
+        <Wrapper onClick={handleOnClick}>
             <ColorMarker $color={color} />
             <Title>
                 {title}
@@ -39,4 +39,5 @@ ListItemContent.propTypes = {
     onGoingTotal: PropTypes.string,
     taskTotal: PropTypes.string,
     status: PropTypes.string,
+    handleOnClick: PropTypes.func,
 };

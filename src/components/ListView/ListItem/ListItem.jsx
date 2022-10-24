@@ -11,9 +11,8 @@ export default function ListItem(props) {
             className={className}
             $extra={extra}
             $separate={separate}
-            $current={current}
-            onClick={onClick}>
-            <ListItemContent {...values} />
+            $current={current}>
+            <ListItemContent {...values} handleOnClick={onClick} />
             {extra && cloneElement(extra)}
         </Wrapper>
     )
