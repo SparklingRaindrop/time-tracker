@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
+import { isSameDay } from '../../../../JS/date';
+
+import { Option } from '../../../../components';
 import { Wrapper } from './styled';
 
 export default function TimeRangePicker(props) {
@@ -13,6 +16,9 @@ export default function TimeRangePicker(props) {
             }
         )
     }, [duration]);
+    const isOneDay = useMemo(() => {
+        return isSameDay(duration);
+    }, [duration])
 
     function handleOnChange({ target }) {
         const targetName = target.name;
@@ -37,72 +43,43 @@ export default function TimeRangePicker(props) {
             <div>
                 <label htmlFor='start'>From: </label>
                 <select name='start' id='start-hours' onChange={handleOnChange} value={inputValue.start[0]}>
-                    <option value='0'>00</option>
-                    <option value='1'>01</option>
-                    <option value='2'>02</option>
-                    <option value='3'>03</option>
-                    <option value='4'>04</option>
-                    <option value='5'>05</option>
-                    <option value='6'>06</option>
-                    <option value='7'>07</option>
-                    <option value='8'>08</option>
-                    <option value='9'>09</option>
-                    <option value='10'>10</option>
-                    <option value='11'>11</option>
-                    <option value='12'>12</option>
-                    <option value='13'>13</option>
-                    <option value='14'>14</option>
-                    <option value='15'>15</option>
-                    <option value='16'>16</option>
-                    <option value='17'>17</option>
-                    <option value='18'>18</option>
-                    <option value='19'>19</option>
-                    <option value='20'>20</option>
-                    <option value='21'>21</option>
-                    <option value='22'>22</option>
-                    <option value='23'>23</option>
+                    {
+                        [...Array(23).keys()].map(hour => (
+                            <Option key={hour} value={hour} />
+                        ))
+                    }
                 </select>
                 <select name='start' id='start-min' onChange={handleOnChange} value={inputValue.start[1]}>
-                    <option value='0'>00</option>
-                    <option value='15'>15</option>
-                    <option value='30'>30</option>
-                    <option value='45'>45</option>
+                    {
+                        [0, 15, 30, 45].map(minutes => (
+                            <Option
+                                key={minutes}
+                                value={minutes} />
+                        ))
+                    }
                 </select>
             </div>
             <div>
                 <label htmlFor='end'>Until: </label>
                 <select name='end' id='end-hours' onChange={handleOnChange} value={inputValue.end[0]}>
-                    <option value='0'>00</option>
-                    <option value='1'>01</option>
-                    <option value='2'>02</option>
-                    <option value='3'>03</option>
-                    <option value='4'>04</option>
-                    <option value='5'>05</option>
-                    <option value='6'>06</option>
-                    <option value='7'>07</option>
-                    <option value='8'>08</option>
-                    <option value='9'>09</option>
-                    <option value='10'>10</option>
-                    <option value='11'>11</option>
-                    <option value='12'>12</option>
-                    <option value='13'>13</option>
-                    <option value='14'>14</option>
-                    <option value='15'>15</option>
-                    <option value='16'>16</option>
-                    <option value='17'>17</option>
-                    <option value='18'>18</option>
-                    <option value='19'>19</option>
-                    <option value='20'>20</option>
-                    <option value='21'>21</option>
-                    <option value='22'>22</option>
-                    <option value='23'>23</option>
+                    {
+                        [...Array(24).keys()].map(hour => (
+                            <Option
+                                key={hour}
+                                value={hour}
+                                disabled={isOneDay && hour < inputValue.start[0]} />
+                        ))
+                    }
                 </select>
                 <select name='end' id='end-min' onChange={handleOnChange} value={inputValue.end[1]}>
-                    <option value='0'>00</option>
-                    <option value='15'>15</option>
-                    <option value='30'>30</option>
-                    <option value='45'>45</option>
-                    <option value='59'>59</option>
+                    {
+                        [0, 15, 30, 45, 59].map(minutes => (
+                            <Option
+                                key={minutes}
+                                value={minutes}
+                                disabled={isOneDay && inputValue.start[0] === inputValue.end[0] && minutes <= inputValue.end[1]} />
+                        ))
+                    }
                 </select>
             </div>
         </Wrapper>

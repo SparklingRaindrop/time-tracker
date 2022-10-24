@@ -10,6 +10,7 @@ import InputField from './InputField';
 import Stopwatch from './Stopwatch';
 import Tab from './Tab';
 import Controller from './Controller';
+import Option from './Option';
 import {
     Modal,
     ModalWrapper,
@@ -45,5 +46,6 @@ export {
     ModalColorSwatch,
     ModalCloseButton,
     ModalHeader,
-    ModalTag
+    ModalTag,
+    Option
 }
