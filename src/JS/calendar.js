@@ -1,6 +1,6 @@
 // value for date is Date instance object without specific time
 
-import { compareDates } from './date';
+import { compareDates, isSameDay } from './date';
 
 export function generateInitialDurationDate(date) {
     const start = date ? new Date(date) : new Date();
@@ -23,9 +23,7 @@ export function durationReducer(state, { type, value }) {
         const newDate = new Date(value);
 
         // Reset on the third day clicked.
-        const isRange = !(state[0].getFullYear() === state[1].getFullYear()) ||
-            !(state[0].getMonth() === state[1].getMonth()) ||
-            !(state[0].getDate() === state[1].getDate());
+        const isRange = !isSameDay(state)
         if (isRange) {
             return generateInitialDurationDate(value);
         }
