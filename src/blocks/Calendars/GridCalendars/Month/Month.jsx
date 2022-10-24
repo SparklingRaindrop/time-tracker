@@ -6,30 +6,34 @@ export default function Month(props) {
     const { value, dispatch, year, duration } = props;
 
     if (!value) return;
+    const { month, calendar, weekdaysAbbr } = value;
+
     return (
-        <>
-            <h3>{value.month}</h3>
+        <div>
+            {month === 'January' && <h2>{year}</h2>}
+            <h3>{month}</h3>
             <Wrapper>
                 {
-                    value.weekdaysAbbr.map(day => <DayOfWeek key={day}>{day}</DayOfWeek>)
+                    weekdaysAbbr.map(day => <DayOfWeek key={day}>{day}</DayOfWeek>)
                 }
                 {
-                    value.calendar.map(week => (
+                    calendar.map(week => (
                         week.map((day, index) => (
                             <Day
                                 key={`${day}${index}`}
                                 day={day}
                                 year={year}
-                                month={value.month}
+                                month={month}
                                 dispatch={dispatch}
                                 duration={duration} />
                         ))
                     ))
                 }
             </Wrapper>
-        </>
+        </div>
     )
 }
+
 
 Month.propTypes = {
     value: PropTypes.object.isRequired,
