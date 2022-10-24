@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getDayStatus } from '../../../../../JS/dataParser';
 import { Container } from './styled';
 
@@ -12,8 +12,8 @@ import { Container } from './styled';
 export default function Day(props) {
     const { day, dispatch, year, month, duration } = props;
     const dateValue = new Date(`${month} ${day} ${year}`);
-    //const status = useMemo(() => getDayStatus(new Date(`${month} ${day} ${year}`), duration), [duration]);
     const [status, setStatus] = useState(getDayStatus(dateValue, duration));
+    const ref = useRef(null);
 
     useEffect(() => {
         // Calender contains 0 as placeholder
@@ -21,6 +21,12 @@ export default function Day(props) {
         const test = getDayStatus(dateValue, duration);
         setStatus(test);
     }, [duration]);
+
+    useEffect(() => {
+        if (ref.current && status === 'selected') {
+            ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, [ref]);
 
     function handleOnClick() {
         if (day === 0) return;
@@ -34,6 +40,7 @@ export default function Day(props) {
         <Container
             $day={!day ? '' : day}
             $status={status}
+            ref={ref}
             onClick={handleOnClick} />
     )
 }
@@ -44,4 +51,5 @@ Day.propTypes = {
     day: PropTypes.number.isRequired,
     dispatch: PropTypes.func,
     duration: PropTypes.array,
+    ref: PropTypes.object,
 };
