@@ -7,5 +7,4 @@ export const Wrapper = styled.li`
     flex-direction: row;
     background: ${({theme, $current}) => $current ? theme.colors.highlight : theme.colors.white};
     border-radius: 0.2rem;
-    ${({$separate}) => $separate && 'margin: 0.5rem 0;'};
 `;

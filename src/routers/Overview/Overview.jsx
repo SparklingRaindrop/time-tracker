@@ -14,7 +14,7 @@ export default function Overview() {
     const location = useLocation();
     const { projects } = useContext(UserDataContext);
     const { navbarRef } = useOutletContext();
-    const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
+    const [currentProjectId, setCurrentProjectId] = useState(projects.length > 0 ? projects[0].id : null);
     const currentTab = useMemo(() => {
         const { pathname } = location;
         const pathNames = pathname.split('/');

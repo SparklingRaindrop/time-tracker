@@ -30,8 +30,8 @@ export default function ListItemContent(props) {
 }
 
 ListItemContent.propTypes = {
-    color: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    color: PropTypes.string,
     log: PropTypes.bool,
     isActive: PropTypes.bool,
     start: PropTypes.string,

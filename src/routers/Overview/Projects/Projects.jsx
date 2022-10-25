@@ -28,33 +28,34 @@ export default function Projects() {
 
     return (
         <ContentWrapper>
-            <List>
+            <List separate>
                 {
-                    projects.map(project => {
-                        const { id, name, color } = project;
-                        return (
-                            <ListItem
-                                key={id}
-                                current={id === currentProjectId}
-                                separate
-                                values={{
-                                    title: name,
-                                    color: color,
-                                    taskTotal: String(getTasksByProjectId(id).length),
-                                    onGoingTotal: String(getActiveTasksByProjectId(id).length),
-                                }}
-                                onClick={() => updateCurrentProjectId(id)}
-                                extra={<Controller
-                                    id={id}
-                                    buttons={[{
-                                        name: 'remove',
-                                        onClick: () => removeData(`/projects/${id}`)
-                                    }, {
-                                        name: 'edit',
-                                        onClick: () => onOpen(project)
-                                    }]} />} />
-                        )
-                    })
+                    projects.length > 0 ?
+                        projects.map(project => {
+                            const { id, name, color } = project;
+                            return (
+                                <ListItem
+                                    key={id}
+                                    current={id === currentProjectId}
+                                    values={{
+                                        title: name,
+                                        color: color,
+                                        taskTotal: String(getTasksByProjectId(id).length),
+                                        onGoingTotal: String(getActiveTasksByProjectId(id).length),
+                                    }}
+                                    onClick={() => updateCurrentProjectId(id)}
+                                    extra={<Controller
+                                        id={id}
+                                        buttons={[{
+                                            name: 'remove',
+                                            onClick: () => removeData(`/projects/${id}`)
+                                        }, {
+                                            name: 'edit',
+                                            onClick: () => onOpen(project)
+                                        }]} />} />
+                            )
+                        }) :
+                        <ListItem values={{ title: 'No project yet' }} />
                 }
             </List>
             <Modal isOpen={isOpen} content={<ProjectModal />} />

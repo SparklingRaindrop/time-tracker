@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import { UserDataContext } from '../../../context/UserDataProvider';
@@ -25,39 +25,39 @@ export default function Tasks() {
         startTimer,
         getTasksByProjectId
     } = useContext(UserDataContext);
+    const taskList = useMemo(() => getTasksByProjectId(currentProjectId), [currentProjectId]);
 
-
-    // TODO show "No tasks yet"
     return (
         <>
-            <List>
+            <List separate>
                 {
-                    getTasksByProjectId(currentProjectId).map(task => {
-                        const { id, title } = task;
-                        return (
-                            <ListItem
-                                key={id}
-                                values={{
-                                    title,
-                                    color: getProjectColorByTaskId(id),
-                                    log: false,
-                                }}
-                                separate
-                                extra={
-                                    <Controller
-                                        buttons={[{
-                                            name: 'start',
-                                            onClick: () => startTimer(id)
-                                        }, {
-                                            name: 'edit',
-                                            onClick: () => onOpen(task)
-                                        }, {
-                                            name: 'remove',
-                                            onClick: () => removeData(`/tasks/${id}`)
-                                        }]} />
-                                } />
-                        )
-                    })
+                    taskList.length > 0 ?
+                        taskList.map(task => {
+                            const { id, title } = task;
+                            return (
+                                <ListItem
+                                    key={id}
+                                    values={{
+                                        title,
+                                        color: getProjectColorByTaskId(id),
+                                        log: false,
+                                    }}
+                                    extra={
+                                        <Controller
+                                            buttons={[{
+                                                name: 'start',
+                                                onClick: () => startTimer(id)
+                                            }, {
+                                                name: 'edit',
+                                                onClick: () => onOpen(task)
+                                            }, {
+                                                name: 'remove',
+                                                onClick: () => removeData(`/tasks/${id}`)
+                                            }]} />
+                                    } />
+                            )
+                        }) :
+                        <ListItem values={{ title: 'No project yet' }} />
                 }
             </List>
             <Modal isOpen={isOpen} content={<TaskModal />} />

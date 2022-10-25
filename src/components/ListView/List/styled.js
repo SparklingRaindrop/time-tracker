@@ -9,4 +9,8 @@ export const Container = styled(Wrapper)`
 export const ListWrapper = styled.ul`
     list-style-type: none;
     padding-left: 0;
+
+    & > li {
+        ${({$separate}) => $separate && 'margin: 0.5rem 0;'};
+    }
 `;

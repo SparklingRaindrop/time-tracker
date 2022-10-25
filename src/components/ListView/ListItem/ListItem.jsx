@@ -4,13 +4,12 @@ import { Wrapper } from './styled';
 import { cloneElement } from 'react';
 
 export default function ListItem(props) {
-    const { values, extra, className, separate, onClick, current } = props;
+    const { values, extra, className, onClick, current } = props;
 
     return (
         <Wrapper
             className={className}
             $extra={extra}
-            $separate={separate}
             $current={current}>
             <ListItemContent {...values} handleOnClick={onClick} />
             {extra && cloneElement(extra)}
@@ -22,7 +21,6 @@ ListItem.propTypes = {
     values: PropTypes.object.isRequired,
     extra: PropTypes.element,
     className: PropTypes.string,
-    separate: PropTypes.bool,
     current: PropTypes.bool,
     onClick: PropTypes.func,
 };
