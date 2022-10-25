@@ -26,6 +26,7 @@ export const Title = styled.div`
     grid-row: 1 / span 1;
 
     font-size: 1.5rem;
+    overflow-wrap: break-word;
 `;
 
 export const GreyText = styled.div`
