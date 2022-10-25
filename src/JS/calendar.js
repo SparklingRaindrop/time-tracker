@@ -31,7 +31,7 @@ export function durationReducer(state, { type, value }) {
         let hour;
         let minutes;
         // If newDate is before start
-        if (compareDates(newDate, end) < 0) {
+        if (compareDates(newDate, start) < 0) {
             //take over time from start
             hour = start.getHours();
             minutes = start.getMinutes();
@@ -42,7 +42,7 @@ export function durationReducer(state, { type, value }) {
             hour = end.getHours();
             minutes = end.getMinutes();
             // Remove end
-            newDuration.splice(0, 1);
+            newDuration.splice(1, 1);
         } else {
             console.error('Check!')
         }
