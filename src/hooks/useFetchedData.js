@@ -11,8 +11,7 @@ import {
 import { filterLogDataByDuration } from '../JS/date';
 
 export default function useFetchedData() {
-    //const [userId, setUserId] = useState(null); DO NOT DELETE
-    const userId = '2';
+    const [userId, setUserId] = useState(null);
     const [projects, setProjects] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [logs, setLogs] = useState([]);
@@ -242,7 +241,7 @@ export default function useFetchedData() {
         userId,
         tasks,
         logs,
-        //setUserId, DO NOT DELETE
+        setUserId,
         getProjects,
         updateProjects,
         fetchUserId,
