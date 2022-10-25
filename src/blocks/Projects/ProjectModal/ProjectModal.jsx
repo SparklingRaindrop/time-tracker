@@ -31,7 +31,7 @@ export default function ProjectModal() {
             color: data.color
         } : initValue
     );
-    const { createProject, editData } = useContext(UserDataContext);
+    const { createProject, editProject } = useContext(UserDataContext);
 
     function handleOnChange(event) {
         setInputValue(prev => ({
@@ -50,7 +50,7 @@ export default function ProjectModal() {
     async function handleOnClick() {
         let status;
         if (data) {
-            const response = await editData(`/projects/${data.id}`, inputValue);
+            const response = await editProject(data.id, inputValue);
             status = response.status;
         } else {
             const response = await createProject(inputValue);

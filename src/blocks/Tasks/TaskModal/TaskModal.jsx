@@ -19,7 +19,12 @@ const initValue = {
 
 export default function TaskModal() {
     const { onClose, currentProjectId, data } = useOutletContext();
-    const { getProjectTitleByProjectId, createTask, editData } = useContext(UserDataContext);
+    const {
+        getProjectTitleByProjectId,
+        createTask,
+        editTask,
+        updateTasks,
+    } = useContext(UserDataContext);
     const [inputValue, setInputValue] = useState(data ? { title: data.title } : initValue);
 
     function handleOnChange(event) {
@@ -32,7 +37,7 @@ export default function TaskModal() {
     async function handleClick() {
         let status;
         if (data) {
-            const response = await editData(`/tasks/${data.id}`, inputValue);
+            const response = await editTask(data.id, inputValue);
             status = response.status;
         } else {
             const response = await createTask(currentProjectId, inputValue);
@@ -42,6 +47,7 @@ export default function TaskModal() {
             setInputValue({
                 title: ''
             });
+            updateTasks();
         }
     }
 
