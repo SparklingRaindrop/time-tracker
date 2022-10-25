@@ -28,6 +28,6 @@ export function isValid(date) {
 
 export function isSameDay(duration) {
     return (duration[0].getFullYear() === duration[1].getFullYear()) &&
-    (duration[0].getMonth() === duration[1].getMonth()) &
+    (duration[0].getMonth() === duration[1].getMonth()) &&
     (duration[0].getDate() === duration[1].getDate())
 }
