@@ -49,12 +49,9 @@ export const Tag = styled.div`
     gap:  ${({theme}) => theme.spacing.sm};
 `;
 
-export const Title = styled.h2`
+export const Title = styled.h3`
     width: 100%;
     text-align: center;
-`;
-
-export const Label = styled.label`
     text-transform: capitalize;
 `;
 

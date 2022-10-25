@@ -3,7 +3,6 @@ import { useOutletContext } from 'react-router-dom';
 import {
     ModalWrapper,
     ModalTitle,
-    ModalLabel,
     ModalCloseButton,
     ModalHeader,
     ModalTag,
@@ -53,7 +52,7 @@ export default function TaskModal() {
                 <ModalCloseButton name='close' onClick={onClose} />
             </ModalHeader>
             <div>
-                <ModalLabel>task name</ModalLabel>
+                <label>task name</label>
                 <InputField placeholder='task name' value={inputValue.title} onChange={handleOnChange} />
             </div>
             <ModalTag><TagIcon name='tag' />{getProjectTitleByProjectId(currentProjectId)}</ModalTag>

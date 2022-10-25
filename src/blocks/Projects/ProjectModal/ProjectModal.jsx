@@ -6,7 +6,6 @@ import { Button, InputField } from '../../../components';
 import {
     ModalWrapper,
     ModalTitle,
-    ModalLabel,
     ModalColors,
     ModalColorSwatch,
     ModalCloseButton,
@@ -72,7 +71,7 @@ export default function ProjectModal() {
                 <ModalCloseButton onClick={onClose} name='close' />
             </ModalHeader>
             <div>
-                <ModalLabel>project name</ModalLabel>
+                <label>project name</label>
                 <InputField
                     placeholder='project name'
                     value={inputValue.name}

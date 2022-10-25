@@ -5,7 +5,7 @@ import { Overlay } from './styled';
 
 export default function Modal(props) {
     const { isOpen, content } = props;
-
+    console.log(content)
     if (!isOpen) return;
     return createPortal(
         <Overlay>
