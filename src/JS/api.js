@@ -63,11 +63,11 @@ export async function patchData(endpoint, data) {
 }
 
 export async function fetchUserId(username) {
-    const response = await fetchData(`/user?username=${username}`);
+    const response = await fetchData(`/users?username=${username}`);
     return response;
 }
 
 export async function fetchProjects(userId) {
-    const response = await fetchData(`/project?user_id=${userId}`);
+    const response = await fetchData(`/projects?userId=${userId}`);
     return response;
 }
