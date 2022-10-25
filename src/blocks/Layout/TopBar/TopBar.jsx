@@ -12,7 +12,7 @@ export default function TopBar() {
     if (pathname === '/') return;
     return (
         <Wrapper>
-            {pageTitle}
+            <h3>{pageTitle}</h3>
         </Wrapper>
     )
 }
