@@ -14,7 +14,7 @@ export default function List(props) {
 
 List.propTypes = {
     className: PropTypes.string,
-    children: PropTypes.array,
+    children: PropTypes.node,
     filled: PropTypes.bool,
     round: PropTypes.bool,
     separate: PropTypes.bool,
