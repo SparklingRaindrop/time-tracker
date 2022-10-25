@@ -16,18 +16,12 @@ export const NavRef = forwardRef((props, ref) => {
 
 Nav.propTypes = {
     className: PropTypes.string,
-    children: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-    ]),
+    children: PropTypes.node,
 };
 
 NavRef.displayName = 'NavRef';
 
 NavRef.propTypes = {
     className: PropTypes.string,
-    children: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-    ]),
+    children: PropTypes.node,
 };
