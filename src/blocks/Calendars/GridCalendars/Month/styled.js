@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
     gap: 0.2rem;
 `;
 
-export const DayOfWeek = styled.div`
+export const DayOfWeek = styled.h6`
     width: 100%;
     text-align: center;
 `;
