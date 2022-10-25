@@ -9,7 +9,9 @@ export default function Timer(props) {
     const { currentShownLogId } = props;
     const { getLogDataByLogId } = useContext(UserDataContext);
 
-    const { start = 0, end = 0 } = getLogDataByLogId(currentShownLogId);
+    const currentLog = getLogDataByLogId(currentShownLogId);
+    const start = currentLog ? currentLog.start : null;
+    const end = currentLog ? currentLog.end : null;
 
     return (
         <Wrapper>
