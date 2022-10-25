@@ -18,7 +18,7 @@ export default function useFetchedData() {
     const [onGoingTimers, setOnGoingTimers] = useState([]);
 
     async function getProjects() {
-        const response = await fetchData(`/projects?user_id=${userId}`);
+        const response = await fetchData(`/project?user_id=${userId}`);
         return response;
     }
 
@@ -30,7 +30,7 @@ export default function useFetchedData() {
     }
     
     async function getTasks(projectId) {
-        const { status, data } = await fetchData(`/tasks?project_id=${projectId}`);
+        const { status, data } = await fetchData(`/task?project_id=${projectId}`);
         if (status === 200) {
             return data;
         } else {
@@ -46,7 +46,7 @@ export default function useFetchedData() {
     }
 
     async function getLogs(taskId) {
-        const { status, data } = await fetchData(`/logs?task_id=${taskId}`);
+        const { status, data } = await fetchData(`/log?task_id=${taskId}`);
         if (status === 200) {
             return data;
         } else {
@@ -162,7 +162,7 @@ export default function useFetchedData() {
             end: null,
             id: uuid4()
         };
-        const {status} = await postData(`/logs`, data);
+        const {status} = await postData(`/log`, data);
         if (status === 201) {
             // TODO check status for fetch?
             updateLogs(tasks);
@@ -174,7 +174,7 @@ export default function useFetchedData() {
         const data = {
             end: new Date().toString()
         };
-        const {status} = await patchData(`/logs/${logId}`, data);
+        const {status} = await patchData(`/log/${logId}`, data);
         if (status === 200) {
             // TODO check status for fetch?
             updateLogs(tasks)
@@ -211,7 +211,7 @@ export default function useFetchedData() {
             id: uuid4(),
         };
 
-        const {status} = await postData('/projects', data);
+        const {status} = await postData('/project', data);
         if (status === 201) {
             // TODO check status for fetch?
             const data = await getProjects(userId);
@@ -227,7 +227,7 @@ export default function useFetchedData() {
             id: uuid4(),
         };
 
-        const {status} = await postData('/tasks', data);
+        const {status} = await postData('/task', data);
         if (status === 201) {
             // TODO check status for fetch? SHould I fetch projects or just tasks for this project??
             const data = await getProjects(userId);
@@ -238,7 +238,7 @@ export default function useFetchedData() {
 
     async function createUser(data) {
         //// This has to be done on the backend ////
-        const {data: usernameList} = await fetchData(`/users`);
+        const {data: usernameList} = await fetchData(`/user`);
         const test = usernameList.filter(({username}) => username === data.username);
         if (test.length > 1) {
             return {status: 400}
@@ -246,10 +246,26 @@ export default function useFetchedData() {
         //// This has to be done on the backend ////
         
         
-        const { status } = await postData('/users', {
+        const { status } = await postData('/user', {
             ...data, id: uuid4()
         });
         return { status };
+    }
+
+    async function removeProject(id) {
+        removeData(`/project/${id}`);
+    }
+
+    async function removeTask(id) {
+        removeData(`/task/${id}`);
+    }
+
+    async function editProject(id, data) {
+        await editData(`/project/${id}`, data)
+    }
+
+    async function editTask(id, data) {
+        await editData(`/task/${id}`, data);
     }
 
     return {
@@ -276,7 +292,9 @@ export default function useFetchedData() {
         createUser,
         startTimer,
         stopTimer,
-        removeData,
-        editData,
+        removeProject,
+        removeTask,
+        editProject,
+        editTask,
     }
 }

@@ -21,12 +21,13 @@ import { TaskModal } from '../../../blocks/Tasks';
 export default function Tasks() {
     const { isOpen, currentProjectId, onOpen, } = useOutletContext();
     const {
-        removeData,
+        removeTask,
         getProjectColorByTaskId,
         startTimer,
-        getTasksByProjectId
+        getTasksByProjectId,
+        tasks,
     } = useContext(UserDataContext);
-    const taskList = useMemo(() => getTasksByProjectId(currentProjectId), [currentProjectId]);
+    const taskList = useMemo(() => getTasksByProjectId(currentProjectId), [currentProjectId, tasks]);
 
     return (
         <>
@@ -53,7 +54,7 @@ export default function Tasks() {
                                                 onClick: () => onOpen(task)
                                             }, {
                                                 name: 'remove',
-                                                onClick: () => removeData(`/tasks/${id}`)
+                                                onClick: () => removeTask(id)
                                             }]} />
                                     } />
                             )

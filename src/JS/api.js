@@ -2,7 +2,7 @@
 // https://axios-http.com/
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000'
+const BASE_URL = 'http://192.168.10.239:4000'
 const fetch = axios.create({
     baseURL: BASE_URL,
 });
@@ -63,11 +63,11 @@ export async function patchData(endpoint, data) {
 }
 
 export async function fetchUserId(username) {
-    const response = await fetchData(`/users?username=${username}`);
+    const response = await fetchData(`/user?username=${username}`);
     return response;
 }
 
 export async function fetchProjects(userId) {
-    const response = await fetchData(`/projects?user_id=${userId}`);
+    const response = await fetchData(`/project?user_id=${userId}`);
     return response;
 }

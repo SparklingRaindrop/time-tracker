@@ -23,7 +23,7 @@ export default function Projects() {
         projects,
         getTasksByProjectId,
         getActiveTasksByProjectId,
-        removeData,
+        removeProject,
     } = useContext(UserDataContext);
 
     return (
@@ -48,7 +48,7 @@ export default function Projects() {
                                         id={id}
                                         buttons={[{
                                             name: 'remove',
-                                            onClick: () => removeData(`/projects/${id}`)
+                                            onClick: () => removeProject(id)
                                         }, {
                                             name: 'edit',
                                             onClick: () => onOpen(project)
