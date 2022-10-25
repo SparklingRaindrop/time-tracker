@@ -1,7 +1,10 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ThemeProvider from './context/ThemeProvider';
+import { fetchProjects } from './JS/api';
+
 import { GlobalStyles } from './components';
+
 import Calendar from './routers/Calendar';
 import Layout from './routers/Layout';
 import Login from './routers/Login/Login';
@@ -10,18 +13,20 @@ import Overview from './routers/Overview';
 import Tasks from './routers/Overview/Tasks';
 import Projects from './routers/Overview/Projects';
 import UserDataProvider from './context/UserDataProvider';
-import { fetchProjects } from './JS/api';
+import ErrorPage from './routers/ErrorPage';
 
 const router = createBrowserRouter([
     {
         index: true,
         path: '/',
         element: <Login />,
+        errorElement: <ErrorPage />
     },
     {
         path: ':id',
         element: <Layout />,
         loader: async({params}) => fetchProjects(params.id),
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -64,12 +69,6 @@ function App() {
 
 export default App;
 
-
-// Add Project -> need api function
-// Add task
-// Edit Task
-// Edit Project
-// Fix on going total on projects
-// allow date range for timers
-
-// Check icon Button's icon color
+// Toast to tell if the request was successful
+// Modal should close automatically
+// Icon is transparent
