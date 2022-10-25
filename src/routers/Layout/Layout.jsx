@@ -25,7 +25,7 @@ export default function Layout() {
         <Wrapper>
             <ContentWrapper $noTopBar={pathname === '/'} $navbarHeight={navRef.current && navRef.current.clientHeight}>
                 <TopBar />
-                <Outlet />
+                <Outlet context={{ navbarRef: navRef }} />
             </ContentWrapper>
             <Navbar ref={navRef} />
         </Wrapper>
