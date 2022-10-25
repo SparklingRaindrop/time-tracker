@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login() {
     const [inputValue, setInputValue] = useState('');
     const [isError, setIsError] = useState(false);
-    const { setUserId, userId, fetchUserId } = useContext(UserDataContext);
+    const { setUserId, userId, fetchUserId, createUser } = useContext(UserDataContext);
     const navigate = useNavigate();
 
     function handleOnChange(event) {
@@ -23,13 +23,21 @@ export default function Login() {
             setIsError(true);
         } else {
             setUserId(data[0].id);
-            console.log(data.id);
         }
     }
 
     function handleKeyDown(event) {
         if (event.key !== 'Enter') return;
         handleOnClick();
+    }
+
+    async function handleCreateUser() {
+        if (inputValue === '') return;
+        const { status } = await createUser({ username: inputValue });
+
+        if (status === 201) {
+            setInputValue('');
+        }
     }
 
     useEffect(() => {
@@ -51,6 +59,9 @@ export default function Login() {
                 label='Login'
                 onClick={handleOnClick} />
             <div>{isError ? 'Please provide correct username' : null}</div>
+            <Button
+                label='Create new user'
+                onClick={handleCreateUser} />
         </Container>
     )
 }

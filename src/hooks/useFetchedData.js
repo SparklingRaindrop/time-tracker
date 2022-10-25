@@ -236,25 +236,44 @@ export default function useFetchedData() {
         return { status };
     }
 
+    async function createUser(data) {
+        //// This has to be done on the backend ////
+        const {data: usernameList} = await fetchData(`/users`);
+        const test = usernameList.filter(({username}) => username === data.username);
+        if (test.length > 1) {
+            return {status: 400}
+        }
+        //// This has to be done on the backend ////
+        
+        
+        const { status } = await postData('/users', {
+            ...data, id: uuid4()
+        });
+        return { status };
+    }
+
     return {
         projects,
         userId,
         tasks,
         logs,
+        fetchUserId,
         setUserId,
         getProjects,
         updateProjects,
-        fetchUserId,
-        getLogDataByLogId,
-        getLogDataByTaskId,
-        getTasksByProjectId,
-        getActiveTasksByProjectId,
+        getTasks,
+        updateTasks,
         getProjectColorByTaskId,
         getProjectTitleByProjectId,
         getTaskTitleByTaskId,
+        getTasksByProjectId,
+        getActiveTasksByProjectId,
+        getLogDataByLogId,
+        getLogDataByTaskId,
         filterLogsByDuration,
         createProject,
         createTask,
+        createUser,
         startTimer,
         stopTimer,
         removeData,
