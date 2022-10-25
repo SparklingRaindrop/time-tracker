@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useOutletContext } from 'react-router-dom'
 
 import { UserDataContext } from '../../context/UserDataProvider';
 import useToggleModal from '../../hooks/useToggleModal';
@@ -12,13 +12,15 @@ const TABS = ['projects', 'tasks'];
 
 export default function Overview() {
     const location = useLocation();
-    const { projects } = useContext(UserDataContext)
+    const { projects } = useContext(UserDataContext);
+    const { navbarRef } = useOutletContext();
     const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
     const currentTab = useMemo(() => {
         const { pathname } = location;
         const pathNames = pathname.split('/');
         return pathNames[pathNames.length - 1];
     }, [location]);
+    const navbarHeight = useMemo(() => navbarRef.current && navbarRef.current.clientHeight, [navbarRef])
     const { isOpen, onClose, onOpen, data } = useToggleModal();
 
     function updateCurrentProjectId(newId) {
@@ -40,7 +42,7 @@ export default function Overview() {
                 }
             </TabList>
             <Outlet context={{ isOpen, onClose, onOpen, currentProjectId, updateCurrentProjectId, data }} />
-            <FloatingButton name='add' onClick={() => onOpen()} />
+            <FloatingButton name='add' onClick={() => onOpen()} $navbarHeight={navbarHeight} />
         </Tabs>
     )
 }

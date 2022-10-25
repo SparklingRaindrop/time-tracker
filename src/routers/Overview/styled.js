@@ -16,8 +16,13 @@ export const TabList = styled.ul`
 `;
 
 export const FloatingButton = styled(IconButton)`
-    position: absolute;
-    bottom: 1rem;
+    position: fixed;
+    bottom: ${({$navbarHeight}) => `calc(${$navbarHeight}px + 1rem)`};
     left: 50%;
     transform: translateX(-50%);
+
+    & svg {
+        width: 5rem;
+        height: 5rem;
+    }
 `;
