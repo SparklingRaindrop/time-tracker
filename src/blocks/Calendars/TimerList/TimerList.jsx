@@ -21,8 +21,9 @@ export default function TimerList(props) {
         getProjectColorByTaskId,
         getTaskTitleByTaskId,
         filterLogsByDuration,
+        logs,
     } = useContext(UserDataContext);
-    const logList = useMemo(() => filterLogsByDuration(duration), [duration]);
+    const logList = useMemo(() => filterLogsByDuration(duration), [duration, logs]);
 
     return (
         <ListWrapper filled round>
