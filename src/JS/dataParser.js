@@ -2,7 +2,7 @@ import { isValid } from './date';
 
 export function getStatus(isActive, end) {
         if (isActive) {
-            return 'on going';
+            return 'ongoing';
         } else if (!isActive && !end) {
             return 'pending';
         } else if (!isActive && end) {

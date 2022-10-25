@@ -93,7 +93,7 @@ export default function useFetchedData() {
         setOnGoingTimers(result);
     }, [logs]);
 
-    // Updating "end" value for logs that are on going.
+    // Updating "end" value for logs that are ongoing.
     useEffect(() => {
         if (onGoingTimers.length === 0) return;
 
@@ -182,18 +182,6 @@ export default function useFetchedData() {
         return { status };
     }
 
-/*     async function removeData(endpoint) {
-        const {status} = await deleteData(endpoint);
-        if (status === 200) {
-            // TODO check status for fetch?
-            const data = await getProjects(userId);
-            updateProjects(data);
-        } else {
-            console.error('Error in removeData')
-        }
-        return { status };
-    } */
-
     async function editData(endpoint, data) {
         const {status} = await patchData(endpoint, data);
         if (status === 200) {
@@ -237,13 +225,13 @@ export default function useFetchedData() {
     }
 
     async function createUser(data) {
-        //// This has to be done on the backend ////
+        //// Below has to be done on the backend (Checking duplication) ////
         const {data: usernameList} = await fetchData(`/users`);
         const test = usernameList.filter(({username}) => username === data.username);
-        if (test.length > 1) {
+        if (test.length > 0) {
             return {status: 400}
         }
-        //// This has to be done on the backend ////
+        //// Above has to be done on the backend ////
         
         
         const { status } = await postData('/users', {
@@ -257,11 +245,13 @@ export default function useFetchedData() {
     }
 
     async function removeTask(id) {
+        //// Below has to be done on the backend (Cascading) ////
         const targetLogs = logs.filter(log => log.task_id === id);
         try {
             await Promise.all(targetLogs.map(log => removeLog(log.id)));
             await deleteData(`/tasks/${id}`);
             const newTasks = await getTasks();
+        //// Above has to be done on the backend ////
             updateTasks(newTasks);
         } catch (error) {
             console.error(error);
