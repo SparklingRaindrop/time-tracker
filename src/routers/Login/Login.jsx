@@ -22,22 +22,31 @@ export default function Login() {
         if (status !== 200) {
             setIsError(true);
         } else {
-            setUserId(data.id);
+            setUserId(data[0].id);
+            console.log(data.id);
         }
+    }
+
+    function handleKeyDown(event) {
+        if (event.key !== 'Enter') return;
+        handleOnClick();
     }
 
     useEffect(() => {
         if (userId) {
             navigate(`${userId}/calendar`);
         }
-    }, [userId])
+    }, [userId]);
 
     return (
         <Container>
+            <h1>Timekeeper</h1>
             <InputField
-                placeholder='username'
+                placeholder='Username'
                 value={inputValue}
-                onChange={handleOnChange} />
+                onChange={handleOnChange}
+                onKeyDown={handleKeyDown}
+                autoFocus />
             <Button
                 label='Login'
                 onClick={handleOnClick} />
