@@ -1,10 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { UserDataContext } from '../../../context/UserDataProvider';
 import { getStatus } from '../../../JS/dataParser';
 
 import { ListWrapper, ListItemWrapper } from './styled';
+import { ListItem } from '../../../components';
 
 /*
     color: 'red',
@@ -17,29 +18,30 @@ import { ListWrapper, ListItemWrapper } from './styled';
 export default function TimerList(props) {
     const { duration } = props;
     const {
-        logs,
         getProjectColorByTaskId,
         getTaskTitleByTaskId,
         filterLogsByDuration,
     } = useContext(UserDataContext);
+    const logList = useMemo(() => filterLogsByDuration(duration), [duration]);
 
-    if (logs.length === 0) return;
     return (
         <ListWrapper filled round>
             {
-                filterLogsByDuration(duration).map(({ id, start, end, isActive, task_id }) => (
-                    <ListItemWrapper
-                        key={id}
-                        values={{
-                            color: getProjectColorByTaskId(task_id),
-                            title: getTaskTitleByTaskId(task_id),
-                            isActive,
-                            start: start,
-                            end: end,
-                            log: true,
-                            status: getStatus(isActive, end)
-                        }} />
-                ))
+                logList.length > 0 ?
+                    logList.map(({ id, start, end, isActive, task_id }) => (
+                        <ListItemWrapper
+                            key={id}
+                            values={{
+                                color: getProjectColorByTaskId(task_id),
+                                title: getTaskTitleByTaskId(task_id),
+                                isActive,
+                                start: start,
+                                end: end,
+                                log: true,
+                                status: getStatus(isActive, end)
+                            }} />
+                    )) :
+                    <ListItem values={{ title: 'No timer found' }} />
             }
         </ListWrapper>
     )

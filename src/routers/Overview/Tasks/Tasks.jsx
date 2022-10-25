@@ -59,7 +59,7 @@ export default function Tasks() {
                                     } />
                             )
                         }) :
-                        <ListItem values={{ title: 'No project yet' }} />
+                        <ListItem values={{ title: 'No task yet' }} />
                 }
             </ListView>
             <Modal isOpen={isOpen} content={<TaskModal />} />
