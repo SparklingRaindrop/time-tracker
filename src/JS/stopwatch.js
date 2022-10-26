@@ -1,5 +1,5 @@
 export function getDuration(start, end) {
-    if (!start && !end) {
+    if (!start || !end) {
         return {
             hours: 0,
             minutes: 0,
