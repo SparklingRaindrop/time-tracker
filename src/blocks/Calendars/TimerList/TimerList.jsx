@@ -31,11 +31,11 @@ export default function TimerList(props) {
         <ListWrapper filled round>
             {
                 logList.length > 0 ?
-                    logList.map(({ id, start, end, isActive, task_id }) => (
+                    logList.map(({ id, start, end, isActive, taskId }) => (
                         <TimerListItem
                             key={id}
-                            color={getProjectColorByTaskId(task_id)}
-                            title={getTaskTitleByTaskId(task_id)}
+                            color={getProjectColorByTaskId(taskId)}
+                            title={getTaskTitleByTaskId(taskId)}
                             start={start}
                             end={end}
                             status={getStatus(isActive)} />

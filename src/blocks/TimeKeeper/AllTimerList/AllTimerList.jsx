@@ -37,14 +37,14 @@ export default function AllTimerList(props) {
         <ListWrapper filled round>
             {
                 logs.length > 0 ?
-                    logs.map(({ id, start, end, isActive, task_id }) => {
+                    logs.map(({ id, start, end, isActive, taskId }) => {
                         if (!isActive) return;
                         return (
                             <AllTimerListItem
                                 key={id}
                                 current={id === currentShownLogId}
-                                title={getTaskTitleByTaskId(task_id)}
-                                color={getProjectColorByTaskId(task_id)}
+                                title={getTaskTitleByTaskId(taskId)}
+                                color={getProjectColorByTaskId(taskId)}
                                 start={start}
                                 end={end}
                                 onClick={() => changeCurrentLogId(id)}

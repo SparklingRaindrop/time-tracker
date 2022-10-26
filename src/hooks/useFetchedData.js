@@ -18,7 +18,7 @@ export default function useFetchedData() {
     const [onGoingTimers, setOnGoingTimers] = useState([]);
 
     async function getProjects() {
-        const response = await fetchData(`/projects?user_id=${userId}`);
+        const response = await fetchData(`/projects?userId=${userId}`);
         return response;
     }
 
@@ -30,7 +30,7 @@ export default function useFetchedData() {
     }
     
     async function getTasks(projectId) {
-        const { status, data } = await fetchData(`/tasks?project_id=${projectId}`);
+        const { status, data } = await fetchData(`/tasks?projectId=${projectId}`);
         if (status === 200) {
             return data;
         } else {
@@ -46,7 +46,7 @@ export default function useFetchedData() {
     }
 
     async function getLogs(taskId) {
-        const { status, data } = await fetchData(`/logs?task_id=${taskId}`);
+        const { status, data } = await fetchData(`/logs?taskId=${taskId}`);
         if (status === 200) {
             return data;
         } else {
@@ -118,7 +118,7 @@ export default function useFetchedData() {
     }, [onGoingTimers]);
 
     function getProjectColorByTaskId(taskId) {
-        const projectId = tasks.find(task => task.id === taskId).project_id;
+        const projectId = tasks.find(task => task.id === taskId).projectId;
         const parentProject = projects.find(p => p.id === projectId);
         return parentProject.color;
     }
@@ -129,12 +129,12 @@ export default function useFetchedData() {
     }
 
     function getLogDataByTaskId(taskId) {
-        const result = logs.filter(l => l.task_id === taskId);
+        const result = logs.filter(l => l.taskId === taskId);
         return result.length === 0 ? undefined : result;
     }
 
     function getTasksByProjectId(projectId) {
-        return tasks.filter(task => task.project_id === projectId);
+        return tasks.filter(task => task.projectId === projectId);
     }
 
     function getLogDataByLogId(logId) {
@@ -146,8 +146,8 @@ export default function useFetchedData() {
     }
 
     function getActiveTasksByProjectId(projectId) {
-        const targetTasks = tasks.filter(({project_id}) => project_id === projectId);
-        const targetLogs = targetTasks.map(task => logs.filter(log => log.task_id === task.id)).flat();
+        const targetTasks = tasks.filter((task) => task.projectId === projectId);
+        const targetLogs = targetTasks.map(task => logs.filter(log => log.taskId === task.id)).flat();
         return targetLogs.filter(log => log.isActive);
     }
 
@@ -157,7 +157,7 @@ export default function useFetchedData() {
 
     async function startTimer(taskId) {
         const data = {
-            task_id: taskId,
+            taskId: taskId,
             start: new Date().toString(),
             end: null,
             id: uuid4()
@@ -195,7 +195,7 @@ export default function useFetchedData() {
     async function createProject(newData) {
         const data= {
             ...newData,
-            user_id: userId,
+            userId: userId,
             id: uuid4(),
         };
 
@@ -211,7 +211,7 @@ export default function useFetchedData() {
     async function createTask(projectId, newData) {
         const data= {
             ...newData,
-            project_id: projectId,
+            projectId: projectId,
             id: uuid4(),
         };
 
@@ -240,18 +240,10 @@ export default function useFetchedData() {
         return { status };
     }
 
-    async function removeLog(id) {
-        deleteData(`/logs/${id}`);
-    }
-
     async function removeTask(id) {
-        //// Below has to be done on the backend (Cascading) ////
-        const targetLogs = logs.filter(log => log.task_id === id);
         try {
-            await Promise.all(targetLogs.map(log => removeLog(log.id)));
-            await deleteData(`/tasks/${id}`);
+            await deleteData(`/tasks/${id}?_embed=logs`);
             const newTasks = await getTasks();
-        //// Above has to be done on the backend ////
             updateTasks(newTasks);
         } catch (error) {
             console.error(error);
@@ -259,12 +251,8 @@ export default function useFetchedData() {
     }
 
     async function removeProject(id) {
-        const targetTasks = tasks.filter(task => task.project_id === id);
-        const targetLogs = targetTasks.map(task => logs.filter(log => log.task_id === task.id)).flat();
         try {
-            await Promise.all(targetLogs.map(log => removeLog(log.id)));
-            await Promise.all(targetTasks.map(task => removeTask(task.id)));
-            await deleteData(`/projects/${id}`);
+            await deleteData(`/projects/${id}?_embed=tasks`);
             const newProjects = await getProjects();
             updateProjects(newProjects);
         } catch (error) {
