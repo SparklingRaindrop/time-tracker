@@ -21,5 +21,5 @@ export default function Timer(props) {
 }
 
 Timer.propTypes = {
-    currentShownLogId: PropTypes.string.isRequired,
+    currentShownLogId: PropTypes.string,
 };

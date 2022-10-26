@@ -25,6 +25,11 @@ export default function AllTimerList(props) {
         getTaskTitleByTaskId
     } = useContext(UserDataContext);
 
+    function handleStopTimer(id) {
+        changeCurrentLogId(logs.find(({ isActive }) => isActive)?.id || null);
+        stopTimer(id);
+    }
+
     return (
         <ListWrapper filled round>
             {
@@ -47,7 +52,7 @@ export default function AllTimerList(props) {
                                     <Controller
                                         buttons={[{
                                             name: 'stop',
-                                            onClick: () => stopTimer(id)
+                                            onClick: () => handleStopTimer(id)
                                         }]}
                                         disabled={id !== currentShownLogId} />
                                 }
