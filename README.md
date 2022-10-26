@@ -3,10 +3,16 @@
 This is a time tracking application that is designed for a mobile-sized screen.
 
 ## How to run
-- npm install
+- npm install for backend & client
 - If you are testing backend and client running on the different device in the same network<br />
-Change in .env: REACT_APP_BASE_URL=http://(localIP):4000
-- npm start
+Change .env: REACT_APP_BASE_URL=http://(localIP):4000<br>
+Change start script for backend to the same local IP
+```
+"scripts": {
+    "start": "npx json-server --host (localIP) --watch db.json"
+}
+```
+- npm start for backend & client
 
 ## Styling
 
@@ -26,4 +32,3 @@ I'm using this package to generate calendar data. The reason why I chose to use 
 
 - **uuid4**<br />
 I generate ID for new projects and tasks using uuid4. The server can generate ID, but this can cause confusion because a task and a project can have the same ID number. To avoid unnecessary confusion, I chose to use this package.
-
