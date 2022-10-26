@@ -4,7 +4,7 @@ import useCalendar from '../../../hooks/useCalendar';
 
 import Month from './Month';
 import TimeRangePicker from './TimeRangePicker';
-import { OuterWrapper, CalenderWrapper } from './styled';
+import { Wrapper, CalenderWrapper, Calender } from './styled';
 import { Button } from '../../../components';
 
 
@@ -13,26 +13,28 @@ export default function GridCalendars(props) {
     const { calendar, addCalendar } = useCalendar();
 
     return (
-        <OuterWrapper>
+        <Wrapper>
             <CalenderWrapper>
-                <Button label='Show Previous Year' onClick={() => addCalendar(-1)} />
-                {
-                    calendar.map(data => {
-                        const { month, year } = data;
-                        return (
-                            <Month
-                                key={month + year}
-                                value={data}
-                                year={year}
-                                dispatch={dispatch}
-                                duration={duration} />
-                        )
-                    })
-                }
-                <Button label='Show Next Year' onClick={() => addCalendar(1)} />
+                <Calender>
+                    <Button label='Show Previous Year' onClick={() => addCalendar(-1)} />
+                    {
+                        calendar.map(data => {
+                            const { month, year } = data;
+                            return (
+                                <Month
+                                    key={month + year}
+                                    value={data}
+                                    year={year}
+                                    dispatch={dispatch}
+                                    duration={duration} />
+                            )
+                        })
+                    }
+                    <Button label='Show Next Year' onClick={() => addCalendar(1)} />
+                </Calender>
             </CalenderWrapper>
             <TimeRangePicker dispatch={dispatch} duration={duration} />
-        </OuterWrapper>
+        </Wrapper>
     )
 }
 
