@@ -4,10 +4,10 @@ import { ColorMarker, GreyText, ListItem, Title } from '../../../components/List
 import { Content } from './styled';
 
 export default function ProjectListItem(props) {
-    const { color, title, onGoingTotal, taskTotal, onClick, controller } = props;
+    const { color, title, onGoingTotal, taskTotal, onClick, controller, current } = props;
 
     return (
-        <ListItem onClick={onClick}>
+        <ListItem onClick={onClick} $current={current}>
             <Content>
                 <ColorMarker $color={color} />
                 <Title>
@@ -28,4 +28,5 @@ ProjectListItem.propTypes = {
     taskTotal: PropTypes.string,
     onClick: PropTypes.func,
     controller: PropTypes.element,
+    current: PropTypes.bool,
 };
