@@ -4,8 +4,8 @@ import { useOutletContext } from 'react-router-dom';
 import { UserDataContext } from '../../../context/UserDataProvider';
 
 import { Controller, ListItem, Modal } from '../../../components';
-import { ListView } from '../../../blocks/Overview';
-import { TaskModal } from '../../../blocks/Tasks';
+import { OverviewList } from '../../../blocks/Overview';
+import { TaskListItem, TaskModal } from '../../../blocks/Tasks';
 
 
 /* 
@@ -31,20 +31,17 @@ export default function Tasks() {
 
     return (
         <>
-            <ListView>
+            <OverviewList>
                 {
                     taskList.length > 0 ?
                         taskList.map(task => {
                             const { id, title } = task;
                             return (
-                                <ListItem
+                                <TaskListItem
                                     key={id}
-                                    values={{
-                                        title,
-                                        color: getProjectColorByTaskId(id),
-                                        log: false,
-                                    }}
-                                    extra={
+                                    title={title}
+                                    color={getProjectColorByTaskId(id)}
+                                    controller={
                                         <Controller
                                             buttons={[{
                                                 name: 'start',
@@ -61,7 +58,7 @@ export default function Tasks() {
                         }) :
                         <ListItem values={{ title: 'No task yet' }} />
                 }
-            </ListView>
+            </OverviewList>
             <Modal isOpen={isOpen} content={<TaskModal />} />
         </>
     )
