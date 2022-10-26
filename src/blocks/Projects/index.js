@@ -1,2 +1,3 @@
-import ProjectModal from './ProjectModal/ProjectModal';
-export { ProjectModal };
+import ProjectModal from './ProjectModal';
+import ProjectListItem from './ProjectListItem';
+export { ProjectModal, ProjectListItem };

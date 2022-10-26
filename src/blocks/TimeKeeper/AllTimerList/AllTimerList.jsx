@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { UserDataContext } from '../../../context/UserDataProvider';
 
 import { Controller, ListItem } from '../../../components';
-import { ListWrapper, ListItemWrapper } from './styled';
+import { ListWrapper } from './styled';
+import AllTimerListItem from './AllTimerListItem';
 
 /* 
     {
@@ -25,9 +26,10 @@ export default function AllTimerList(props) {
         getTaskTitleByTaskId
     } = useContext(UserDataContext);
 
-    function handleStopTimer(id) {
-        changeCurrentLogId(logs.find(({ isActive }) => isActive)?.id || null);
-        stopTimer(id);
+    async function handleStopTimer(id) {
+        await stopTimer(id);
+        const nextLog = logs.find(({ isActive }) => isActive);
+        changeCurrentLogId(nextLog ? nextLog.id : null);
     }
 
     return (
@@ -37,26 +39,22 @@ export default function AllTimerList(props) {
                     logs.map(({ id, start, end, isActive, task_id }) => {
                         if (!isActive) return;
                         return (
-                            <ListItemWrapper
+                            <AllTimerListItem
                                 key={id}
                                 current={id === currentShownLogId}
-                                values={{
-                                    title: getTaskTitleByTaskId(task_id),
-                                    isActive,
-                                    color: getProjectColorByTaskId(task_id),
-                                    log: true,
-                                    start: start,
-                                    end: end,
-                                }}
-                                extra={
+                                title={getTaskTitleByTaskId(task_id)}
+                                color={getProjectColorByTaskId(task_id)}
+                                start={start}
+                                end={end}
+                                onClick={() => changeCurrentLogId(id)}
+                                controller={
                                     <Controller
                                         buttons={[{
                                             name: 'stop',
                                             onClick: () => handleStopTimer(id)
                                         }]}
                                         disabled={id !== currentShownLogId} />
-                                }
-                                onClick={() => changeCurrentLogId(id)} />
+                                } />
                         )
                     }) :
                     <ListItem values={{ title: 'No active timer found' }} />

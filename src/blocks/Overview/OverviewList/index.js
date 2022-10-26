@@ -1,2 +1,2 @@
 import OverviewList from './OverviewList';
-export {OverviewList};
+export default OverviewList;

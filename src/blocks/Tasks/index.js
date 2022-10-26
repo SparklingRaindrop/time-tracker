@@ -1,2 +1,3 @@
 import TaskModal from './TaskModal';
-export { TaskModal };
+import TaskListItem from './TaskListItem';
+export { TaskModal, TaskListItem };

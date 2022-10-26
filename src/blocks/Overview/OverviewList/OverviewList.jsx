@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { List } from '../../../components';
 import { Wrapper } from './styled';
 
-export default function ListView(props) {
+export default function OverviewList(props) {
     const { children } = props;
     return (
         <Wrapper>
@@ -14,6 +14,6 @@ export default function ListView(props) {
     )
 }
 
-ListView.propTypes = {
+OverviewList.propTypes = {
     children: PropTypes.node.isRequired,
 };

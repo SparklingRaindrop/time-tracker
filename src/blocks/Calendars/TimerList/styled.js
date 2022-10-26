@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ListItem, List } from '../../../components';
+import { List } from '../../../components';
 
 
 export const ListWrapper = styled(List)`
@@ -10,10 +10,4 @@ export const ListWrapper = styled(List)`
     position:absolute;
     bottom: 0;
     top: 60%;
-`;
-
-export const ListItemWrapper = styled(ListItem)`
-    &:not(:last-of-type) {
-        border-bottom: 1px solid ${({theme}) => theme.colors.grey};
-    }
 `;

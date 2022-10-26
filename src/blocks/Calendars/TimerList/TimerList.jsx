@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { UserDataContext } from '../../../context/UserDataProvider';
 import { getStatus } from '../../../JS/dataParser';
 
-import { ListWrapper, ListItemWrapper } from './styled';
+import { ListWrapper } from './styled';
+import TimerListItem from './TimerListItem';
 import { ListItem } from '../../../components';
 
 /*
@@ -30,17 +31,13 @@ export default function TimerList(props) {
             {
                 logList.length > 0 ?
                     logList.map(({ id, start, end, isActive, task_id }) => (
-                        <ListItemWrapper
+                        <TimerListItem
                             key={id}
-                            values={{
-                                color: getProjectColorByTaskId(task_id),
-                                title: getTaskTitleByTaskId(task_id),
-                                isActive,
-                                start: start,
-                                end: end,
-                                log: true,
-                                status: getStatus(isActive, end)
-                            }} />
+                            color={getProjectColorByTaskId(task_id)}
+                            title={getTaskTitleByTaskId(task_id)}
+                            start={start}
+                            end={end}
+                            status={getStatus(isActive)} />
                     )) :
                     <ListItem values={{ title: 'No timer found' }} />
             }

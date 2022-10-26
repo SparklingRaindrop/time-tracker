@@ -1,7 +1,17 @@
 import List from './List';
-import ListItem from './ListItem';
+import {
+    ListItem,
+    ContentWrapper,
+    ColorMarker,
+    Title,
+    GreyText
+} from './ListItem';
 
 export {
     List,
-    ListItem
+    ListItem,
+    ContentWrapper,
+    ColorMarker,
+    Title,
+    GreyText
 };
