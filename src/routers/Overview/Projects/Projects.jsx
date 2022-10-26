@@ -4,8 +4,8 @@ import { useOutletContext } from 'react-router-dom';
 import { UserDataContext } from '../../../context/UserDataProvider';
 
 import { Controller, ListItem, Modal } from '../../../components';
-import { ProjectModal } from '../../../blocks/Projects';
-import { ListView } from '../../../blocks/Overview';
+import { ProjectListItem, ProjectModal } from '../../../blocks/Projects';
+import { OverviewList } from '../../../blocks/Overview';
 
 /* 
     {
@@ -28,36 +28,36 @@ export default function Projects() {
 
     return (
         <>
-            <ListView>
+            <OverviewList>
                 {
                     projects.length > 0 ?
                         projects.map(project => {
                             const { id, name, color } = project;
                             return (
-                                <ListItem
+                                <ProjectListItem
                                     key={id}
                                     current={id === currentProjectId}
-                                    values={{
-                                        title: name,
-                                        color: color,
-                                        taskTotal: String(getTasksByProjectId(id).length),
-                                        onGoingTotal: String(getActiveTasksByProjectId(id).length),
-                                    }}
+                                    title={name}
+                                    color={color}
+                                    taskTotal={String(getTasksByProjectId(id).length)}
+                                    onGoingTotal={String(getActiveTasksByProjectId(id).length)}
                                     onClick={() => updateCurrentProjectId(id)}
-                                    extra={<Controller
-                                        id={id}
-                                        buttons={[{
-                                            name: 'remove',
-                                            onClick: () => removeProject(id)
-                                        }, {
-                                            name: 'edit',
-                                            onClick: () => onOpen(project)
-                                        }]} />} />
+                                    controller={
+                                        <Controller
+                                            id={id}
+                                            buttons={[{
+                                                name: 'remove',
+                                                onClick: () => removeProject(id)
+                                            }, {
+                                                name: 'edit',
+                                                onClick: () => onOpen(project)
+                                            }]} />
+                                    } />
                             )
                         }) :
                         <ListItem values={{ title: 'No project yet' }} />
                 }
-            </ListView>
+            </OverviewList>
             <Modal isOpen={isOpen} content={<ProjectModal />} />
         </>
     )
