@@ -6,6 +6,7 @@ import { UserDataContext } from '../../../context/UserDataProvider';
 import { Controller, ListItem, Modal } from '../../../components';
 import { ProjectListItem, ProjectModal } from '../../../blocks/Projects';
 import { OverviewList } from '../../../blocks/Overview';
+import { ContentWrapper, Title } from '../../../components/ListView';
 
 /* 
     {
@@ -55,7 +56,7 @@ export default function Projects() {
                                     } />
                             )
                         }) :
-                        <ListItem values={{ title: 'No project yet' }} />
+                        <ListItem><ContentWrapper><Title>No Task Yet</Title></ContentWrapper></ListItem>
                 }
             </OverviewList>
             <Modal isOpen={isOpen} content={<ProjectModal />} />

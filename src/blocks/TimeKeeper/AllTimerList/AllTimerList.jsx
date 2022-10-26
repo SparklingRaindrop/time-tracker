@@ -6,6 +6,7 @@ import { UserDataContext } from '../../../context/UserDataProvider';
 import { Controller, ListItem } from '../../../components';
 import { ListWrapper } from './styled';
 import AllTimerListItem from './AllTimerListItem';
+import { ContentWrapper, Title } from '../../../components/ListView';
 
 /* 
     {
@@ -57,7 +58,7 @@ export default function AllTimerList(props) {
                                 } />
                         )
                     }) :
-                    <ListItem values={{ title: 'No active timer found' }} />
+                    <ListItem><ContentWrapper><Title>No active timer found</Title></ContentWrapper></ListItem>
             }
         </ListWrapper>
     )

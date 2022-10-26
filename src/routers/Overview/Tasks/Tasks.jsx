@@ -6,6 +6,7 @@ import { UserDataContext } from '../../../context/UserDataProvider';
 import { Controller, ListItem, Modal } from '../../../components';
 import { OverviewList } from '../../../blocks/Overview';
 import { TaskListItem, TaskModal } from '../../../blocks/Tasks';
+import { ContentWrapper, Title } from '../../../components/ListView';
 
 
 /* 
@@ -56,7 +57,7 @@ export default function Tasks() {
                                     } />
                             )
                         }) :
-                        <ListItem values={{ title: 'No task yet' }} />
+                        <ListItem><ContentWrapper><Title>No Task Yet</Title></ContentWrapper></ListItem>
                 }
             </OverviewList>
             <Modal isOpen={isOpen} content={<TaskModal />} />

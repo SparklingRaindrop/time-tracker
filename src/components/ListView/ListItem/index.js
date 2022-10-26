@@ -1,10 +1,9 @@
-// import ListItem from './ListItem';
 import {
     ContentWrapper,
     ColorMarker,
     Title,
     GreyText,
-    Wrapper as ListItem
+    ListItem
 } from './styled';
 export {
     ListItem,
