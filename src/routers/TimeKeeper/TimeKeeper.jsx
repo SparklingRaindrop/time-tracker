@@ -5,7 +5,7 @@ import { Timer, AllTimerList } from '../../blocks/TimeKeeper'
 
 export default function TimeKeeper() {
     const { logs } = useContext(UserDataContext);
-    const [currentShownLogId, setCurrentShownLogId] = useState(logs.find(({ start, isActive }) => !start || isActive)?.id || null);
+    const [currentShownLogId, setCurrentShownLogId] = useState(logs.find(({ isActive }) => isActive)?.id || null);
 
     function changeCurrentLogId(newLogId) {
         setCurrentShownLogId(newLogId);
