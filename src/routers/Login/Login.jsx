@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [inputValue, setInputValue] = useState('');
-    const [isError, setIsError] = useState(false);
+    const [isError, setIsError] = useState({
+        login: false,
+        createUser: false
+    });
     const { setUserId, userId, fetchUserId, createUser } = useContext(UserDataContext);
     const navigate = useNavigate();
 
@@ -18,9 +21,13 @@ export default function Login() {
         if (isError) {
             setIsError(false);
         }
-        const { status, data } = await fetchUserId(inputValue);
-        if (status !== 200) {
-            setIsError(true);
+        const { data } = await fetchUserId(inputValue);
+        // It returns 200 if endpoint is correct
+        if (data.length === 0) {
+            setIsError(prev => ({
+                ...prev,
+                login: true,
+            }));
         } else {
             setUserId(data[0].id);
         }
@@ -35,7 +42,12 @@ export default function Login() {
         if (inputValue === '') return;
         const { status } = await createUser({ username: inputValue });
 
-        if (status === 201) {
+        if (status !== 200) {
+            setIsError(prev => ({
+                ...prev,
+                createUser: true,
+            }));
+        } else {
             setInputValue('');
         }
     }
@@ -58,10 +70,11 @@ export default function Login() {
             <Button
                 label='Login'
                 onClick={handleOnClick} />
-            <div>{isError ? 'Please provide correct username' : null}</div>
+            <div>{isError.login ? 'Please provide correct username' : null}</div>
             <Button
                 label='Create new user'
                 onClick={handleCreateUser} />
+            <div>{isError.createUser ? 'Provided username already exists' : null}</div>
         </Container>
     )
 }
