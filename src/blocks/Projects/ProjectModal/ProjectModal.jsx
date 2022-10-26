@@ -53,6 +53,7 @@ export default function ProjectModal() {
             const response = await editProject(data.id, inputValue);
             status = response.status;
         } else {
+            if (inputValue.name === '') return;
             const response = await createProject(inputValue);
             status = response.status;
         }

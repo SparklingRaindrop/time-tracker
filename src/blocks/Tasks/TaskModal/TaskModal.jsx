@@ -40,6 +40,7 @@ export default function TaskModal() {
             const response = await editTask(data.id, inputValue);
             status = response.status;
         } else {
+            if (inputValue.title === '') return;
             const response = await createTask(currentProjectId, inputValue);
             status = response.status;
         }
