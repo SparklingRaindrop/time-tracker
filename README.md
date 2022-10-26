@@ -2,6 +2,12 @@
 
 This is a time tracking application that is designed for a mobile-sized screen.
 
+## How to run
+- npm install
+- If you are testing backend and client running on the different device in the same network<br />
+Change in .env: REACT_APP_BASE_URL=http://(localIP):4000
+- npm start
+
 ## Styling
 
 - **Styled Components**<br />
