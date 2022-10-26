@@ -1,10 +1,10 @@
+import axios from 'axios';
 // https://www.npmjs.com/package/json-server
 // https://axios-http.com/
-import axios from 'axios';
 
-const BASE_URL = 'http://192.168.10.239:4000'
 const fetch = axios.create({
-    baseURL: BASE_URL,
+    // eslint-disable-next-line
+    baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 export async function fetchData(endpoint) {
