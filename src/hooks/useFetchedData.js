@@ -240,6 +240,15 @@ export default function useFetchedData() {
         return { status };
     }
 
+    async function removeLog(id) {
+        try {
+            await deleteData(`/logs/${id}`);
+            updateLogs(tasks)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     async function removeTask(id) {
         try {
             await deleteData(`/tasks/${id}?_embed=logs`);
@@ -294,6 +303,7 @@ export default function useFetchedData() {
         stopTimer,
         removeProject,
         removeTask,
+        removeLog,
         editProject,
         editTask,
     }

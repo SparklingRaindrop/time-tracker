@@ -3,9 +3,10 @@ import { ColorMarker, Title } from '../../../../components/ListView';
 import { Wrapper, Log, Status, Content } from './styled';
 
 import { Stopwatch } from '../../../../components';
+import { cloneElement } from 'react';
 
 export default function TimerListItem(props) {
-    const { color, title, start, end, status } = props;
+    const { color, title, start, end, status, controller } = props;
 
     // This blocks until timers get the first end time
     if (status === 'ongoing' && !end) return;
@@ -21,6 +22,7 @@ export default function TimerListItem(props) {
                 </Log>
                 <Status>status: {status}</Status>
             </Content>
+            {cloneElement(controller)}
         </Wrapper>
     )
 }
@@ -31,4 +33,5 @@ TimerListItem.propTypes = {
     start: PropTypes.string,
     end: PropTypes.string,
     status: PropTypes.string,
+    controller: PropTypes.element,
 };

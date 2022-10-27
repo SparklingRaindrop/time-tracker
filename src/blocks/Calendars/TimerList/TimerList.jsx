@@ -6,7 +6,7 @@ import { getStatus } from '../../../JS/dataParser';
 
 import { ListWrapper } from './styled';
 import TimerListItem from './TimerListItem';
-import { ListItem } from '../../../components';
+import { Controller, ListItem } from '../../../components';
 import { ContentWrapper, Title } from '../../../components/ListView';
 
 /*
@@ -24,6 +24,7 @@ export default function TimerList(props) {
         getTaskTitleByTaskId,
         filterLogsByDuration,
         logs,
+        removeLog,
     } = useContext(UserDataContext);
     const logList = useMemo(() => filterLogsByDuration(duration), [duration, logs]);
 
@@ -38,7 +39,14 @@ export default function TimerList(props) {
                             title={getTaskTitleByTaskId(taskId)}
                             start={start}
                             end={end}
-                            status={getStatus(isActive)} />
+                            status={getStatus(isActive)}
+                            controller={
+                                <Controller
+                                    buttons={[{
+                                        name: 'remove',
+                                        onClick: () => removeLog(id)
+                                    }]} />
+                            } />
                     )) :
                     <ListItem><ContentWrapper><Title>No Timer Found</Title></ContentWrapper></ListItem>
             }
