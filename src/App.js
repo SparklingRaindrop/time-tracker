@@ -68,7 +68,3 @@ function App() {
 }
 
 export default App;
-
-// Toast to tell if the request was successful
-// Modal should close automatically
-// Icon is transparent
