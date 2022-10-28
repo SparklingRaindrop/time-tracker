@@ -12,6 +12,7 @@ export default function GridCalendars(props) {
     const { dispatch, duration } = props;
     const { calendar, addCalendar } = useCalendar();
 
+    if (!calendar) return;
     return (
         <Wrapper>
             <CalenderWrapper>

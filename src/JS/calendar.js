@@ -43,8 +43,6 @@ export function durationReducer(state, { type, value }) {
             minutes = end.getMinutes();
             // Remove end
             newDuration.splice(1, 1);
-        } else {
-            console.error('Check!')
         }
         newDate.setHours(hour, minutes);
         newDuration.push(newDate);
