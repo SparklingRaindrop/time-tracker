@@ -3,7 +3,7 @@ import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-do
 
 import { UserDataContext } from '../../context/UserDataProvider';
 
-import { TopBar, Navbar } from '../../blocks/Layout';
+import { TopBar, NavBar } from '../../blocks/Layout';
 import { ContentWrapper, Wrapper } from './styled';
 
 export default function Layout() {
@@ -27,7 +27,7 @@ export default function Layout() {
                 <TopBar />
                 <Outlet context={{ navbarRef: navRef }} />
             </ContentWrapper>
-            <Navbar ref={navRef} />
+            <NavBar ref={navRef} />
         </Wrapper>
     )
 }

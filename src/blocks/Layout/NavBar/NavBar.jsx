@@ -16,7 +16,7 @@ const navLinks = [{
     title: 'Overview'
 }];
 
-export const Navbar = forwardRef((_, ref) => {
+export const NavBar = forwardRef((_, ref) => {
     return (
         <Wrapper ref={ref}>
             {
@@ -26,4 +26,4 @@ export const Navbar = forwardRef((_, ref) => {
     )
 });
 
-Navbar.displayName = 'Navbar';
+NavBar.displayName = 'NavBar';
