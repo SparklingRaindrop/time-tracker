@@ -4,9 +4,9 @@ This is a time tracking application that is designed for a mobile-sized screen.<
 Backend application with example data: [here](https://github.com/SparklingRaindrop/timer-tracker-server)
 
 ## How to run
-1. npm install for backend & client
-2. Change backend URL in .env if necessary. (Default) REACT_APP_BASE_URL="http://localhost:4000"<br>
-3. npm start for backend & client (Default port number: backend(4000) / frontend(3000))
+1. `npm install` for backend & client
+2. Change backend URL in .env if necessary. (Default) `REACT_APP_BASE_URL="http://localhost:4000"`<br>
+3. `npm start` for backend & client (Default port number: backend(4000) / frontend(3000))
 
 ## Features
 - **Calendar**<br />
