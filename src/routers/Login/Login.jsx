@@ -42,12 +42,18 @@ export default function Login() {
         if (inputValue === '') return;
         const { status } = await createUser({ username: inputValue });
 
-        if (status !== 200) {
+        if (status !== 201) {
             setIsError(prev => ({
                 ...prev,
                 createUser: true,
             }));
         } else {
+            if (isError.createUser) {
+                setIsError(prev => ({
+                    ...prev,
+                    createUser: false,
+                }));
+            }
             setInputValue('');
         }
     }
