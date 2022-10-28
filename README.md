@@ -1,6 +1,6 @@
 # Timekeeper
 
-This is a time tracking application that is designed for a mobile-sized screen.
+This is a time tracking application that is designed for a mobile-sized screen.<br />
 Backend application with example data: [here](https://github.com/SparklingRaindrop/timer-tracker-server)
 
 ## How to run
